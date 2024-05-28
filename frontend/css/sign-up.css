@@ -1,0 +1,63 @@
+@import url("https://fonts.googleapis.com/css?family=Kalam");
+.title {
+  font-size: 60px;
+  font-weight: bold;
+  text-align: center;
+  color: #f9f871;
+  margin: 40px 0;
+  font-family: "Kalam";
+  border-bottom: 1px solid #f9f871;
+}
+
+body {
+  background-color: #1e1e1e;
+}
+
+h1 {
+  font-family: "Kalam";
+  color: #f9f871;
+}
+
+button.btn-lg {
+  margin-top: 30px;
+}
+
+.lead {
+  font-size: 1.5em;
+  font-family: "Kalam";
+  color: #f9f871;
+}
+
+.form-control {
+  color: whitesmoke;
+  margin-bottom: 30px;
+  border-color: whitesmoke;
+  background-color: #1e1e1e;
+}
+.form-control::placeholder {
+  color: whitesmoke;
+}
+.form-control:focus {
+  color: whitesmoke;
+  background-color: #1e1e1e;
+}
+
+.form-label {
+  color: whitesmoke;
+}
+
+.btn {
+  border-color: #f9f871;
+  background-color: #1e1e1e;
+}
+.btn:hover {
+  background-color: #fab565;
+}
+
+.game-example {
+  width: 500px;
+  height: 500px;
+  background-color: #616060;
+}
+
+/*# sourceMappingURL=sign-up.css.map */

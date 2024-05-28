@@ -1,0 +1,58 @@
+@import 'colors';
+@import 'fonts';
+@import 'title';
+@import 'sidebar';
+
+body {
+    background-color: $background-color;
+}
+
+h1 {
+    font-family: $primary-font;
+    color: $primary-color;
+}
+
+button.btn-lg {
+    margin-top: 30px;
+}
+
+.lead {
+    font-size: 1.5em;
+    font-family: $primary-font;
+    color: $primary-color;
+}
+
+.form-control {
+    color: $text-color;
+    margin-bottom: 30px;
+    border-color: $text-color;
+    background-color: $background-color;
+    &::placeholder {
+        color: $text-color;
+    }
+    
+    
+    &:focus {
+        color: $text-color;
+        background-color: $background-color;
+    }
+}
+
+.form-label {
+    color: $text-color;
+}
+
+.btn {
+    border-color: $primary-color;
+    background-color: $background-color;
+    &:hover {
+        background-color: $hover-color;
+    }
+}
+
+.game-example {
+    margin: auto;
+    width: 800px;
+    height: 600px;
+    background-color: #616060;
+}

@@ -1,0 +1,151 @@
+$sidebar-width: 200px;
+
+
+body {
+    background-color: $background-color;
+    margin-left: $sidebar-width;//
+}
+
+.sidebar {
+    width: $sidebar-width;
+    background-color: $sidebar-color;
+    height: 100vh; /* 화면 전체 높이 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto; /* 내용이 넘칠 경우 스크롤 생성 */
+    padding-top: 20px;
+
+    .sidebar-header {
+        padding: 20px;
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 100%;
+        }
+        b {
+            font-size: 20px;
+            margin-top: 10px;
+            display: block;
+            text-align: center;
+            color: $text-color;
+        }
+    }
+
+    .menu {
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            margin-top: 30px;
+    
+            li {
+                padding: 10px;
+                a {
+                    padding: 5px;
+                    display: block;
+                    text-align: center;
+                    font-size: 17px;
+                    text-decoration: none;
+                    color: $text-color;
+                    &:hover {
+                        color: $hover-color;
+                    }
+                }
+            }
+        }
+    }
+
+    hr {
+        color: $text-color;
+        margin-bottom: 0;
+    }
+
+    .friend-list {
+        .title {
+            position: relative;
+            font-family: Arial, Helvetica, sans-serif;
+            margin-left: 30%;
+            font-size: 17px;
+            color: $primary-color;
+            border-color: $sidebar-color;
+        }
+    
+        .friend-add-button {
+            position: relative;
+            margin-left: 10%;
+            background: $sidebar-color;
+            cursor: pointer;
+            width: 17px;
+            height: 17px;
+            border: none;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+    
+            &::before,
+            &::after {
+                content: '';
+                position: absolute;
+                margin-top: 5px;
+                background-color: $primary-color;
+            }
+    
+            &:hover:before,
+            &:hover:after {
+            background: $hover-color;
+            transition: 0.2s;
+            }
+    
+            &::before {
+                width: 60%;
+                height: 3px;
+            }
+    
+            &::after {
+                width: 3px;
+                height: 60%;
+            }
+        }
+    
+        .friend-search-bar {
+            display: block;
+            width: 90%;
+            margin-top: 5px;
+            margin-bottom: 0;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 15px;
+        }
+    
+        ul {
+            list-style-type: none;
+            padding-left: 5px;
+            padding-right: 5px;
+            li {
+                position: relative;
+                text-indent: 10px;
+                font-size: 17px;
+                background-color: $friend-status-color;
+                margin-top: 10px;
+                padding-top: 3px;
+                padding-bottom: 3px;
+                color: $text-color;
+                border-radius: 10px;
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    right: 10px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 10px;
+                    height: 10px;
+                    background-color: red;
+                    border-radius: 50%;
+                }
+            }
+        }
+    }
+}

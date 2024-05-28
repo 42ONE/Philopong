@@ -1,10 +1,6 @@
-$text-color: whitesmoke;
-$background-color: #1e1e1e;
-$primary-color: #f9f871;
-$hover-color: #fab565;
-$primary-font: "Kalam";
-
-@import url("https://fonts.googleapis.com/css?family=Kalam");
+@import 'colors';
+@import 'fonts';
+@import 'title';
 
 * {
 	color: $text-color;
@@ -12,17 +8,6 @@ $primary-font: "Kalam";
 
 body {
 	background-color: $background-color;
-}
-
-.title {
-    font-size: 60px;
-    font-weight: bold;
-    text-align: center;
-    color: $primary-color;
-    margin: 40px 0;
-    font-family: $primary-font;
-    /* 밑에 테두리 */
-    border-bottom: 1px solid $primary-color;
 }
 
 .input-base-color {
