@@ -140,6 +140,15 @@ body {
   border-radius: 50%;
 }
 
+.btn {
+  border-color: #f9f871;
+  background-color: #1e1e1e;
+  color: whitesmoke;
+}
+.btn:hover {
+  background-color: #fab565;
+}
+
 body {
   background-color: #1e1e1e;
 }
@@ -175,14 +184,6 @@ button.btn-lg {
 
 .form-label {
   color: whitesmoke;
-}
-
-.btn {
-  border-color: #f9f871;
-  background-color: #1e1e1e;
-}
-.btn:hover {
-  background-color: #fab565;
 }
 
 .game-example {

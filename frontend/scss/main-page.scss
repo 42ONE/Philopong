@@ -2,6 +2,7 @@
 @import 'fonts';
 @import 'title';
 @import 'sidebar';
+@import 'button';
 
 body {
     background-color: $background-color;
@@ -40,14 +41,6 @@ button.btn-lg {
 
 .form-label {
     color: $text-color;
-}
-
-.btn {
-    border-color: $primary-color;
-    background-color: $background-color;
-    &:hover {
-        background-color: $hover-color;
-    }
 }
 
 .game-example {
