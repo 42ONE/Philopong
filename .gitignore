@@ -1,0 +1,4 @@
+frontend/.vscode/
+*.json
+*/.vscode
+*/.DS_Store
