@@ -31,9 +31,16 @@ services:
     ports:
       - "3000:80"
     volumes:
-      - ./frontend:/usr/share/nginx/html:ro
+      - ./frontend:/usr/share/nginx:ro
     depends_on:
       - web
 
 volumes:
   postgres_data:
+  frontend:
+    name: frontend
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./frontend 
