@@ -1,16 +1,15 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
-# Create your models here.
-class User(models.Model):
+class User(AbstractUser):
     email = models.EmailField(unique=True)
-    nickname = models.CharField(max_length=255)
-    password = models.CharField(max_length=255)
-    social_access_token = models.CharField(max_length=255, blank=True, null=True)
-    social_refresh_token = models.CharField(max_length=255, blank=True, null=True)
-    token_expiration_time = models.DateTimeField(blank=True, null=True)
-    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
-    lang = models.CharField(max_length=10)
+    social_access_token = models.CharField(max_length=255, null=True, blank=True)
+    social_refresh_token = models.CharField(max_length=255, null=True, blank=True)
+    token_expiration_time = models.DateTimeField(null=True, blank=True)
+    avatar = models.CharField(max_length=255, null=True, blank=True)
+    lang = models.CharField(max_length=10, default='en')
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.nickname
+class Friend(models.Model):
+    my_id = models.ForeignKey(User, related_name='my_friends', on_delete=models.CASCADE)
+    friend_id = models.ForeignKey(User, related_name='friends_with_me', on_delete=models.CASCADE)
