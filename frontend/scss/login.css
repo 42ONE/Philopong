@@ -14,7 +14,6 @@
   background-color: #1e1e1e;
   color: whitesmoke;
 }
-
 .btn:hover {
   background-color: #fab565;
 }
@@ -31,12 +30,10 @@ body {
   background-color: #1e1e1e;
   color: whitesmoke;
 }
-
 .input-base-color:focus {
   background-color: #1e1e1e;
   color: whitesmoke;
 }
-
 .input-base-color:focus ~ label {
   --bs-body-bg: $background-color;
   --bs-body-color-rgb: 255, 255, 255;
@@ -46,7 +43,6 @@ body {
   color: whitesmoke;
   text-decoration: none;
 }
-
 .link-base-color:hover {
   color: #bababa;
   text-decoration: underline;
@@ -55,7 +51,5 @@ body {
 .text-point-color {
   color: #f9f871;
 }
-
-
 
 /*# sourceMappingURL=login.css.map */
