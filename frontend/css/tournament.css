@@ -57,17 +57,6 @@ h2 {
   margin-bottom: 2em;
 }
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-}
-
 .tournament-bracket {
   display: flex;
   flex-direction: column;
@@ -100,7 +89,6 @@ h2 {
   justify-content: center;
   height: 100%;
   min-height: 100%;
-  border-bottom: 1px dashed #e5e5e5;
   padding-bottom: 2em;
   margin-bottom: 2em;
   transition: padding 0.2s ease-in-out, margin 0.2s ease-in-out;
@@ -115,7 +103,6 @@ h2 {
   .tournament-bracket__list {
     margin-bottom: 0;
     padding-bottom: 0;
-    border-right: 1px dashed #e5e5e5;
     border-bottom: 0;
   }
 }
@@ -130,7 +117,6 @@ h2 {
   flex-direction: column;
   align-items: flex-start;
   position: relative;
-  padding: 2% 0;
   width: 48%;
   transition: padding 0.2s linear;
 }
@@ -200,9 +186,6 @@ h2 {
   }
 }
 @media (min-width: 64em) {
-  .tournament-bracket__item {
-    padding: 0.5em 1.5em;
-  }
   .tournament-bracket__item::after {
     width: 1.5em;
   }
@@ -309,17 +292,17 @@ h2 {
     align-items: flex-end;
   }
 }
-.tournament-bracket__content .tournament-bracket__team:first-child .tournament-bracket__country {
+.tournament-bracket__content .tournament-bracket__team:first-child .tournament-bracket__player {
   order: 2;
   justify-content: flex-end;
 }
 @media (min-width: 16em) {
-  .tournament-bracket__content .tournament-bracket__team:first-child .tournament-bracket__country {
+  .tournament-bracket__content .tournament-bracket__team:first-child .tournament-bracket__player {
     order: 0;
   }
 }
 @media (min-width: 30em) and (max-width: 44em) {
-  .tournament-bracket__content .tournament-bracket__team:first-child .tournament-bracket__country {
+  .tournament-bracket__content .tournament-bracket__team:first-child .tournament-bracket__player {
     flex-direction: column-reverse;
     align-items: flex-end;
   }
@@ -444,6 +427,7 @@ h2 {
   font-size: 0.95rem;
   background-color: #F5F5F5;
   border-color: spin(shade(#F5F5F5, 10%), -10);
+  color: #000;
 }
 .tournament-bracket__team--winner .tournament-bracket__number {
   background-color: #FFF176;
