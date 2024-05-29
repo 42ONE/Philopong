@@ -1,5 +1,6 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css?family=Kalam");
+@import url("https://fonts.googleapis.com/css?family=Kalam");
 .title {
   font-size: 60px;
   font-weight: bold;
@@ -44,6 +45,7 @@ body {
   border-radius: 100%;
 }
 .sidebar .sidebar-header b {
+  font-family: "Kalam";
   font-size: 20px;
   margin-top: 10px;
   display: block;
@@ -51,6 +53,7 @@ body {
   color: whitesmoke;
 }
 .sidebar .menu ul {
+  font-family: sans-serif;
   list-style-type: none;
   padding: 0;
   margin: 0;
@@ -76,7 +79,7 @@ body {
 }
 .sidebar .friend-list .title {
   position: relative;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Kalam";
   margin-left: 30%;
   font-size: 17px;
   color: #f9f871;
@@ -122,6 +125,7 @@ body {
   border-radius: 15px;
 }
 .sidebar .friend-list ul {
+  font-family: sans-serif;
   list-style-type: none;
   padding-left: 5px;
   padding-right: 5px;

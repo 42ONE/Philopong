@@ -34,11 +34,9 @@ button.btn-lg {
   border-color: whitesmoke;
   background-color: #1e1e1e;
 }
-
 .form-control::placeholder {
   color: whitesmoke;
 }
-
 .form-control:focus {
   color: whitesmoke;
   background-color: #1e1e1e;
@@ -52,7 +50,6 @@ button.btn-lg {
   border-color: #f9f871;
   background-color: #1e1e1e;
 }
-
 .btn:hover {
   background-color: #fab565;
 }
@@ -62,7 +59,5 @@ button.btn-lg {
   height: 500px;
   background-color: #616060;
 }
-
-
 
 /*# sourceMappingURL=sign-up.css.map */

@@ -1,3 +1,6 @@
+@import 'fonts';
+@import 'colors';
+
 $sidebar-width: 200px;
 
 
@@ -25,6 +28,7 @@ body {
             border-radius: 100%;
         }
         b {
+            font-family: "Kalam";
             font-size: 20px;
             margin-top: 10px;
             display: block;
@@ -35,6 +39,7 @@ body {
 
     .menu {
         ul {
+            font-family: sans-serif;
             list-style-type: none;
             padding: 0;
             margin: 0;
@@ -65,7 +70,7 @@ body {
     .friend-list {
         .title {
             position: relative;
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: "Kalam";
             margin-left: 30%;
             font-size: 17px;
             color: $primary-color;
@@ -120,6 +125,7 @@ body {
         }
     
         ul {
+            font-family: sans-serif;
             list-style-type: none;
             padding-left: 5px;
             padding-right: 5px;

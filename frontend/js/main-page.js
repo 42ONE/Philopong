@@ -1,14 +1,7 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Main Page</title>
-        <link rel="stylesheet" href="./bootstrap/css/bootstrap.css">
-        <link rel="stylesheet" href="./css/main-page.css">
-    </head>
-    <body>
-        <div class="container">
+class MainPage {
+    template() {
+      return `
+      <div class="container">
             <header class="py-3">
                 <div class="text-center">
                     <h1 class="title">PhiloPong</h1>
@@ -46,7 +39,7 @@
 
             <div class="game-example"></div>
         </div>
-
-            
-    </body>
-</html>
+      `;
+    }
+  }
+  export default new MainPage();
