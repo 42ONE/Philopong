@@ -43,7 +43,7 @@ up:
 # Stop all services
 .PHONY: down
 down:
-	docker-compose -f $(DOCKER_COMPOSE_FILE) down
+	docker-compose -f $(DOCKER_COMPOSE_FILE) down --rmi all
 
 # Restart all services
 .PHONY: restart
