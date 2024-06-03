@@ -1,33 +1,28 @@
-import Profile from "./profile.js";
-import MainPage from "./main-page.js"
+import Login from "./Login.js";
 
-const $app = document.querySelector(".App");
+const $app = document.querySelector("#app");
 
 const routes = {
     "/": {
-        page: MainPage, 
-        css: "../css/main-page.css",
+        page: new Login($app),
+        css: "../css/login.css",
     },
-    "/profile": {
-        page: Profile,
-        css: "../css/profile.css"
-    }
 };
 
-$app.innerHTML = routes["/"].page.template();
-const style = document.querySelector("#style");
+// routes.page;
+const style = document.querySelector("#page-style");
 style.href = routes["/"].css;
 
-export const changeUrl = (requestedUrl) => {
-    history.pushState(null, null, requestedUrl);
+// export const changeUrl = (requestedUrl) => {
+//     history.pushState(null, null, requestedUrl);
 
-    $app.innerHTML = routes[requestedUrl].page.template();
-    style.href = routes[requestedUrl].css;
-}
+//     $app.innerHTML = routes[requestedUrl].page.template();
+//     style.href = routes[requestedUrl].css;
+// }
 
-window.addEventListener("click", (e) => {
-    if (e.target.classList.contains("moveToProfile")) {
-        e.preventDefault();
-        changeUrl("/profile");
-    }
-});
+// window.addEventListener("click", (e) => {
+//     if (e.target.classList.contains("moveToProfile")) {
+//         e.preventDefault();
+//         changeUrl("/profile");
+//     }
+// });
