@@ -29,7 +29,7 @@ $style.href = routes[window.location.pathname].css;
 export const changeUrl = (requestedUrl) => {
     history.pushState(null, null, requestedUrl);
 
-    routes[requestedUrl].render();
+    routes[requestedUrl].page.render();
     $style.href = routes[requestedUrl].css;
 }
 
