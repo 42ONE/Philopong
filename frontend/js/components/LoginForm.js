@@ -18,7 +18,7 @@ export default class LoginForm extends Component {
 					&nbsp;&nbsp;
 					<a class="link-base-color" href="#">비밀번호 찾기</a>
 				</div>
-				<button id="login" class="mt-4 btn w-100 py-2" type="submit">로그인 하기</button>
+				<button id="login" class="mt-4 btn w-100 py-2">로그인 하기</button>
 				<div class="d-flex my-4 justify-content-evenly">
 					<a class="text-decoration-none text-body-white d-flex flex-column align-items-center icon-link-hover" style="--bs-icon-link-transform: translate3d(0, -.250rem, 0);" target="_blank" href="#">
 						<svg version="1.1"
@@ -48,7 +48,8 @@ export default class LoginForm extends Component {
 
 	setEvent() {
 		const { login } = this.props;
-		this.addEvent('click', '#login', () => {
+		this.addEvent('click', '#login', (event) => {
+			event.preventDefault();
 			alert("로그인 API 대기중..");
 		});
 	}
