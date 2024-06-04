@@ -212,7 +212,7 @@ h2 {
 
 .tournament-bracket__match {
   display: flex;
-  width: 100%;
+  width: 80%;
   background-color: #ffffff;
   padding: 1em;
   border: 1px solid transparent;
@@ -309,17 +309,7 @@ h2 {
 
 .tournament-bracket__content {
   display: flex;
-
-  &::after {
-    content: ':';
-    width: 1em;
-    text-align: center;
-    padding: 0.2em 0.1em;
-
-    @media (min-width: $breakpoint-sm) {
-       order: 1;
-    }
-  }
+  justify-content: center;
 
   & .tournament-bracket__team:first-child {
     width: 50%;
