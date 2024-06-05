@@ -19,6 +19,10 @@ const routes = {
     "/sign-up": {
         page: new Tournament($app),
         css: "../css/tournament.css",
+    },
+    "/main-page": {
+        page: new MainPage($app),
+        css: "../css/main-page.css",
     }
 };
 
