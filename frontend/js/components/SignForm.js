@@ -65,12 +65,12 @@ export default class SignForm extends Component {
 
 			if (email === "" || passwd === "" || nickname === "") {
 				alert("필드를 확인해주세요.");
-				return ;
+				return;
 			}
 
 			if (passwd !== passwdCheck) {
 				alert("비밀번호를 확인해주세요.");
-				return ;
+				return;
 			}
 
 			const requestedData = {
