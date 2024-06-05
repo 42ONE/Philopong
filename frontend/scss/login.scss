@@ -13,6 +13,11 @@ body {
 
 .input-base-color {
 	background-color: $background-color;
+	&~label {
+		--bs-body-bg: $background-color;
+		--bs-body-color-rgb: 255, 255, 255;
+	}
+	color: $text-color;
 	&:focus {
 		background-color: $background-color;
 		color: $text-color;
@@ -21,7 +26,6 @@ body {
 		--bs-body-bg: $background-color;
 		--bs-body-color-rgb: 255, 255, 255;
 	}
-	color: $text-color;
 }
 
 .link-base-color {
