@@ -17,7 +17,7 @@ export default class SignForm extends Component {
 
 						<div>
 							<label for="PW" class="form-label">Password</label>
-							<input type="text" class="form-control" id="PW" placeholder="" value="" required>
+							<input type="password" class="form-control" id="PW" placeholder="" value="" required>
 							<div class="invalid-feedback">
 								This PW is already in use.
 							</div>
@@ -25,7 +25,7 @@ export default class SignForm extends Component {
 
 						<div>
 							<label for="PW-check" class="form-label">Re-enter Password </label>
-							<input type="text" class="form-control" id="PW-check" placeholder="" value="" required>
+							<input type="password" class="form-control" id="PW-check" placeholder="" value="" required>
 							<div class="invalid-feedback">
 								This PW does not match the previous one.
 							</div>
@@ -56,7 +56,31 @@ export default class SignForm extends Component {
 		const { singUp } = this.props;
 		this.addEvent('click', '#sign-up', (event) => {
 			event.preventDefault();
-			alert("회원가입 API 대기중..");
+			const $form = event.target.parentNode;
+
+			const email = $form.querySelector('#ID').value;
+			const passwd = $form.querySelector('#PW').value;
+			const passwdCheck = $form.querySelector('#PW-check').value;
+			const nickname = $form.querySelector('#NickName').value;
+
+			if (email === "" || passwd === "" || nickname === "") {
+				alert("필드를 확인해주세요.");
+				return ;
+			}
+
+			if (passwd !== passwdCheck) {
+				alert("비밀번호를 확인해주세요.");
+				return ;
+			}
+
+			const requestedData = {
+				email: email,
+				password: passwd,
+				nickname: nickname,
+				lang: "en",
+			}
+
+			alert("회원가입 API 대기중..\n requestedData : " + JSON.stringify(requestedData));
 		});
 	}
 }
