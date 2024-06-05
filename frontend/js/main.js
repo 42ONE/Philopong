@@ -1,7 +1,7 @@
 import Login from "./Login.js";
 import Tournament from "./Tournament.js";
 import Profile from "./Profile.js";
-import MainPage from "./main-page.js"
+import MainPage from "./MainPage.js"
 
 const $app = document.querySelector("#app");
 
