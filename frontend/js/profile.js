@@ -60,7 +60,7 @@ export default class Profile extends Component {
         const $Avatar = this.$target.querySelector('[data-component="avatar"]');
         const $Info = this.$target.querySelector('[data-component="info"]');
         const $MatchHistory = this.$target.querySelector('[data-component="match-history"]');
-        console.log($Avatar);
+
         new Avatar($Avatar);
         new Info($Info);
         new MatchHistory($MatchHistory);
