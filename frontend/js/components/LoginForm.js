@@ -50,7 +50,17 @@ export default class LoginForm extends Component {
 		const { login } = this.props;
 		this.addEvent('click', '#login', (event) => {
 			event.preventDefault();
-			alert("로그인 API 대기중..");
+			const $form = event.target.parentNode;
+
+			const email = $form.querySelector('#email').value;
+			const passwd = $form.querySelector('#password').value;
+
+			const requestedData = {
+				email: email,
+				password: passwd
+			}
+
+			alert("로그인 API 대기중..\n requestedData : " + JSON.stringify(requestedData));
 		});
 	}
 }
