@@ -2,6 +2,7 @@ import Login from "./Login.js";
 import Tournament from "./Tournament.js";
 import Profile from "./Profile.js";
 import MainPage from "./MainPage.js"
+import SignUp from "./SignUp.js";
 
 const $app = document.querySelector("#app");
 
@@ -19,8 +20,8 @@ const routes = {
         css: "../css/tournament.css",
     },
     "/sign-up": {
-        page: new Tournament($app),
-        css: "../css/tournament.css",
+        page: new SignUp($app),
+        css: "../css/sign-up.css",
     },
     "/profile": {
         page: new Profile($app),
