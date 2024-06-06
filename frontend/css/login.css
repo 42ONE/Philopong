@@ -30,6 +30,10 @@ body {
   background-color: #1e1e1e;
   color: whitesmoke;
 }
+.input-base-color ~ label {
+  --bs-body-bg: $background-color;
+  --bs-body-color-rgb: 255, 255, 255;
+}
 .input-base-color:focus {
   background-color: #1e1e1e;
   color: whitesmoke;
