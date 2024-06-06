@@ -5,9 +5,9 @@ import Sidebar from "./components/Sidebar.js";
 export default class MainPage extends Component{
     template() {
       return `
-      <div data-component="title"></div>
-      <div data-component="sidebar"></div>
-      <div data-component="mainSection"></div>
+      <div class="text-point-color d-flex justify-content-center py-3 title" data-component="title"></div>
+      <div class="sidebar" data-component="sidebar"></div>
+      <div class="game-example" data-component="mainSection"></div>
       `;
     }
 
@@ -16,12 +16,15 @@ export default class MainPage extends Component{
 	}
 
     mounted () {
-        const { getPageTitle, login } = this;
+        const { getPageTitle } = this;
         const $title = this.$target.querySelector('[data-component="title"]');
+        const $sidebar = this.$target.querySelector('[data-component="sidebar"]');
     
         new Title($title, {
-			getPageTitle,
-		});
+          getPageTitle,
+        });
+
+        new Sidebar($sidebar);
       }
 
 
