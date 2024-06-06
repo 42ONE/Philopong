@@ -6,6 +6,7 @@ body {
 }
 
 .sidebar {
+  place-items: center;
   width: 200px;
   background-color: #3e3e3e;
   height: 100vh; /* 화면 전체 높이 */
@@ -31,6 +32,22 @@ body {
   display: block;
   text-align: center;
   color: whitesmoke;
+}
+.sidebar .menu button {
+  background-color: #3e3e3e;
+  border-style: none;
+  font-family: sans-serif;
+  font-size: 17px;
+  margin-left: 23%;
+}
+.sidebar .menu button:hover {
+  color: #fab565;
+}
+.sidebar .menu button:focus {
+  color: whitesmoke;
+}
+.sidebar .menu .dropdown-menu {
+  background-color: rgb(49, 52, 52);
 }
 .sidebar .menu ul {
   font-family: sans-serif;
