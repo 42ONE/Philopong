@@ -1,8 +1,8 @@
 import Login from "./Login.js";
 import Tournament from "./Tournament.js";
-import Profile from "./Profile.js";
+// import Profile from "./Profile.js";
 import MainPage from "./MainPage.js"
-import SignUp from "./SignUp.js";
+// import SignUp from "./SignUp.js";
 
 const $app = document.querySelector("#app");
 
@@ -19,14 +19,14 @@ const routes = {
         page: new Tournament($app),
         css: "../css/tournament.css",
     },
-    "/sign-up": {
-        page: new SignUp($app),
-        css: "../css/sign-up.css",
-    },
-    "/profile": {
-        page: new Profile($app),
-        css: "../css/profile.css",
-    },
+    // "/sign-up": {
+    //     page: new SignUp($app),
+    //     css: "../css/sign-up.css",
+    // },
+    // "/profile": {
+    //     page: new Profile($app),
+    //     css: "../css/profile.css",
+    // },
     "/main-page": {
         page: new MainPage($app),
         css: "../css/main-page.css",
