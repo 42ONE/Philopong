@@ -1,10 +1,10 @@
 let scene, camera, renderer;
-let paddle1, paddle2, ball;
-let paddleWidth = 30, paddleHeight = 200, paddleDepth = 100; // 패들 두께 추가
+let paddle1, paddle2, paddle3, paddle4, ball;
+let paddleWidth = 30, paddleHeight = 100, paddleDepth = 50; // 패들 두께 추가
 let ballRadius = 15;  // 공 반지름
-let ballSpeed = { x: 10, y: 10 };  // 초기 공 속도 (x, y 방향 모두 적용)
+let ballSpeed = { x: 15, y: 15 };  // 초기 공 속도 (x, y 방향 모두 적용)
 let paddleSpeed = 15;
-let keys = { ArrowUp: false, ArrowDown: false, w: false, s: false };
+let keys = { ArrowUp: false, ArrowDown: false, w: false, s: false, y: false, h: false, PageUp: false, PageDown: false};
 
 let score1 = 0;
 let score2 = 0;
@@ -23,11 +23,11 @@ function createScoreBoard() {
     scoreBoard.style.textAlign = 'center';
 
     // 플레이어 1의 점수
-    const player1Score = document.createElement('span');
-    player1Score.id = 'player1Score';
-    player1Score.textContent = `Player 1: ${score1}`;
-    player1Score.style.marginRight = '20px';
-    player1Score.style.display = 'inline-block';
+    const team1Score = document.createElement('span');
+    team1Score.id = 'team1Score';
+    team1Score.textContent = `Team 1: ${score1}`;
+    team1Score.style.marginRight = '20px';
+    team1Score.style.display = 'inline-block';
 
     // VS 요소
     const VS = document.createElement('span');
@@ -37,15 +37,15 @@ function createScoreBoard() {
     VS.style.display = 'inline-block';
     
     // 플레이어 2의 점수
-    const player2Score = document.createElement('span');
-    player2Score.id = 'player2Score';
-    player2Score.textContent = `${score2} :Player 2`;
-    player2Score.style.display = 'inline-block';
+    const team2Score = document.createElement('span');
+    team2Score.id = 'team2Score';
+    team2Score.textContent = `${score2} :Team 2`;
+    team2Score.style.display = 'inline-block';
 
     // 스코어보드에 점수 요소 추가
-    scoreBoard.appendChild(player1Score);
+    scoreBoard.appendChild(team1Score);
     scoreBoard.appendChild(VS);
-    scoreBoard.appendChild(player2Score);
+    scoreBoard.appendChild(team2Score);
 
     // 스코어보드를 문서에 추가
     document.body.appendChild(scoreBoard);
@@ -67,21 +67,21 @@ function createWinnerMessage(winner) {
     document.body.appendChild(winnerMessage);
 }
 
-function updateScore(player) {
-    if (player === 1) {
+function updateScore(team) {
+    if (team === 1) {
         score1 += 1;
-        document.getElementById('player1Score').textContent = `Player 1: ${score1}`;
-    } else if (player === 2) {
+        document.getElementById('team1Score').textContent = `Team 1: ${score1}`;
+    } else if (team === 2) {
         score2 += 1;
-        document.getElementById('player2Score').textContent = `${score2} :Player 2`;
+        document.getElementById('team2Score').textContent = `${score2} :Team 2`;
     }
 
     if (score1 === 11) {
-        createWinnerMessage('Player 1');
+        createWinnerMessage('Team 1');
         ballSpeed.x = 0;
         ballSpeed.y = 0;
     } else if (score2 === 11) {
-        createWinnerMessage('Player 2');
+        createWinnerMessage('Team 2');
         ballSpeed.x = 0;
         ballSpeed.y = 0;
     }
@@ -162,22 +162,37 @@ function init() {
 
     // 패들 생성
     let paddleGeometry = new THREE.BoxGeometry(paddleWidth, paddleHeight, paddleDepth); // 3D 패들 생성
-    let paddleMaterial = new THREE.MeshPhongMaterial({ color: 0xA9A9A9 }); // Phong 재질 사용
 
+    let paddleMaterial = new THREE.MeshPhongMaterial({ color: 0xA9A900 }); // Phong 재질 사용
     paddle1 = new THREE.Mesh(paddleGeometry, paddleMaterial);
+    paddleMaterial = new THREE.MeshPhongMaterial({ color: 0xB900B9 }); // Phong 재질 사용
     paddle2 = new THREE.Mesh(paddleGeometry, paddleMaterial);
+    paddleMaterial = new THREE.MeshPhongMaterial({ color: 0x00D9D9 }); // Phong 재질 사용
+    paddle3 = new THREE.Mesh(paddleGeometry, paddleMaterial);
+    paddleMaterial = new THREE.MeshPhongMaterial({ color: 0xF9F9F9 }); // Phong 재질 사용
+    paddle4 = new THREE.Mesh(paddleGeometry, paddleMaterial);
 
     paddle1.position.set(-window.innerWidth / 2 + paddleWidth / 2, 0, 0);
     paddle2.position.set(window.innerWidth / 2 - paddleWidth / 2, 0, 0);
+    paddle3.position.set(-window.innerWidth / 2 + paddleWidth / 2, 200, 0); // y 위치를 다르게 설정
+    paddle4.position.set(window.innerWidth / 2 - paddleWidth / 2, -200, 0); // y 위치를 다르게 설정
+
 
     // 그림자 설정
     paddle1.castShadow = true;
     paddle1.receiveShadow = true;
     paddle2.castShadow = true;
     paddle2.receiveShadow = true;
+    paddle3.castShadow = true;
+    paddle3.receiveShadow = true;
+    paddle4.castShadow = true;
+    paddle4.receiveShadow = true;
 
     scene.add(paddle1);
     scene.add(paddle2);
+    scene.add(paddle3);
+    scene.add(paddle4);
+    
 
     // 공 생성
     let ballGeometry = new THREE.SphereGeometry(ballRadius, 32, 32);
@@ -268,6 +283,36 @@ function checkBallPaddleCollision() {
         }
         ballSpeed.x = -ballSpeed.x;
     }
+
+    // 패들 3와 충돌 검사
+    if (ball.position.x - ballRadius < paddle3.position.x + paddleWidth / 2 &&
+        ball.position.x + ballRadius > paddle3.position.x - paddleWidth / 2 &&
+        ball.position.y - ballRadius < paddle3.position.y + paddleHeight / 2 &&
+        ball.position.y + ballRadius > paddle3.position.y - paddleHeight / 2) {
+
+        // 충돌 발생 시
+        if (ball.position.x < paddle3.position.x) {
+            ball.position.x = paddle3.position.x - paddleWidth / 2 - ballRadius;
+        } else {
+            ball.position.x = paddle3.position.x + paddleWidth / 2 + ballRadius;
+        }
+        ballSpeed.x = -ballSpeed.x;
+    }
+
+    // 패들 4와 충돌 검사
+    if (ball.position.x - ballRadius < paddle4.position.x + paddleWidth / 2 &&
+        ball.position.x + ballRadius > paddle4.position.x - paddleWidth / 2 &&
+        ball.position.y - ballRadius < paddle4.position.y + paddleHeight / 2 &&
+        ball.position.y + ballRadius > paddle4.position.y - paddleHeight / 2) {
+
+        // 충돌 발생 시
+        if (ball.position.x < paddle4.position.x) {
+            ball.position.x = paddle4.position.x - paddleWidth / 2 - ballRadius;
+        } else {
+            ball.position.x = paddle4.position.x + paddleWidth / 2 + ballRadius;
+        }
+        ballSpeed.x = -ballSpeed.x;
+    }
 }
 
 // 애니메이션 함수에서 호출하는 부분
@@ -286,6 +331,18 @@ function animate() {
     }
     if (keys.s && paddle1.position.y > -window.innerHeight / 2 + paddleHeight / 2) {
         paddle1.position.y -= paddleSpeed;
+    }
+    if (keys.PageUp && paddle4.position.y < window.innerHeight / 2 - paddleHeight / 2) {
+        paddle4.position.y += paddleSpeed;
+    }
+    if (keys.PageDown && paddle4.position.y > -window.innerHeight / 2 + paddleHeight / 2) {
+        paddle4.position.y -= paddleSpeed;
+    }
+    if (keys.y && paddle3.position.y < window.innerHeight / 2 - paddleHeight / 2) {
+        paddle3.position.y += paddleSpeed;
+    }
+    if (keys.h && paddle3.position.y > -window.innerHeight / 2 + paddleHeight / 2) {
+        paddle3.position.y -= paddleSpeed;
     }
 
     // 공 이동
