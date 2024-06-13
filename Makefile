@@ -47,7 +47,7 @@ down:
 
 # Restart all services
 .PHONY: restart
-restart: down up
+re: down up
 
 # View logs of all services
 .PHONY: logs
