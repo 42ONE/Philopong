@@ -22,9 +22,12 @@ export default class LoginForm extends Component {
     setEvent() {
         const { login } = this.props;
         this.addEvent('click', '#login-btn', (event) => {
-            const response = fetch('apl-url');
-
-            alert(response);
+            const response = fetch('http://localhost:8000/oauth/login')
+                .then(response => response.json())
+                .then(data => {
+                    window.location.href = data.authorize_url;
+                })
+                .catch(error => console.error('Error:', error));
         });
     }
 }
