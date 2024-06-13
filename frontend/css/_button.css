@@ -1,0 +1,11 @@
+.btn {
+  border-color: #f9f871;
+  background-color: #1e1e1e;
+  color: whitesmoke;
+  display: block;
+}
+.btn:hover {
+  background-color: #fab565;
+}
+
+/*# sourceMappingURL=_button.css.map */

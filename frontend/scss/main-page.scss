@@ -1,4 +1,5 @@
-@import 'sidebar';
+@import 'colors';
+@import 'fonts';
 @import 'title';
 @import 'button';
 
@@ -9,6 +10,10 @@ body {
 h1 {
     font-family: $primary-font;
     color: $primary-color;
+}
+
+.btn {
+    justify-content: center;
 }
 
 button.btn-lg {

@@ -1,3 +1,5 @@
+@import 'colors';
+
 .btn {
     border-color: $primary-color;
     background-color: $background-color;
@@ -5,4 +7,5 @@
     &:hover {
         background-color: $hover-color;
     }
+    display: block;
 }
