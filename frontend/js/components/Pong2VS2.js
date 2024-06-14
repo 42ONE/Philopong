@@ -1,3 +1,5 @@
+import { changeUrl , $app, routes, $style } from "../core/changeUrl.js";
+
 let scene, camera, renderer;
 let paddle1, paddle2, paddle3, paddle4, ball;
 let paddleWidth = 30, paddleHeight = 100, paddleDepth = 50; // 패들 두께 추가
@@ -5,6 +7,7 @@ let ballRadius = 15;  // 공 반지름
 let ballSpeed = { x: 15, y: 15 };  // 초기 공 속도 (x, y 방향 모두 적용)
 let paddleSpeed = 15;
 let keys = { ArrowUp: false, ArrowDown: false, w: false, s: false, y: false, h: false, PageUp: false, PageDown: false};
+var myReq;
 
 let score1 = 0;
 let score2 = 0;
@@ -12,6 +15,7 @@ let score2 = 0;
 function createScoreBoard() {
     // 스코어보드 컨테이너 생성
     const scoreBoard = document.createElement('div');
+    scoreBoard.id = 'scoreBoard';
     scoreBoard.style.position = 'absolute';
     scoreBoard.style.top = '10px';
     scoreBoard.style.left = '50%';
@@ -53,6 +57,7 @@ function createScoreBoard() {
 
 function createWinnerMessage(winner) {
     const winnerMessage = document.createElement('div');
+    winnerMessage.id = 'winnerMessage';
     winnerMessage.style.position = 'absolute';
     winnerMessage.style.top = '50%';
     winnerMessage.style.left = '50%';
@@ -76,14 +81,22 @@ function updateScore(team) {
         document.getElementById('team2Score').textContent = `${score2} :Team 2`;
     }
 
-    if (score1 === 11) {
-        createWinnerMessage('Team 1');
+    if (score1 === 3 || score2 === 3)
+    {
+        if (score1 === 3) {
+            createWinnerMessage('Team 1');
+        } else if (score2 === 3) {
+            createWinnerMessage('Team 2');
+        }
         ballSpeed.x = 0;
         ballSpeed.y = 0;
-    } else if (score2 === 11) {
-        createWinnerMessage('Team 2');
-        ballSpeed.x = 0;
-        ballSpeed.y = 0;
+        setTimeout(() => {
+            document.body.removeChild(document.getElementsByTagName('canvas')[0]);
+            document.body.removeChild(document.getElementById('scoreBoard'));
+            document.body.removeChild(document.getElementById('winnerMessage'));
+            cancelAnimationFrame(myReq);
+            changeUrl('/main-page');
+        }, 3000);
     }
 }
 
@@ -104,10 +117,13 @@ function resetBall() {
     ballSpeed.x = -ballSpeed.x;
 }
 
-init();
-animate();
+// init();
+// animate();
 
-function init() {
+export function init() {
+    ballSpeed = { x: 10, y: 10 };  // 초기 공 속도 (x, y 방향 모두 적용)
+    score1 = 0;
+    score2 = 0;
     // 씬 설정
     scene = new THREE.Scene();
 
@@ -316,8 +332,8 @@ function checkBallPaddleCollision() {
 }
 
 // 애니메이션 함수에서 호출하는 부분
-function animate() {
-    requestAnimationFrame(animate);
+export function animate() {
+    myReq = requestAnimationFrame(animate);
 
     // 패들 이동
     if (keys.ArrowUp && paddle2.position.y < window.innerHeight / 2 - paddleHeight / 2) {

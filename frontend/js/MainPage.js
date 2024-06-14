@@ -1,5 +1,6 @@
 import Component from "./core/Component.js";
 import Title from "./components/Title.js";
+import { changeUrl } from "./core/changeUrl.js";
 
 export default class MainPage extends Component{
     template() {
@@ -57,6 +58,14 @@ export default class MainPage extends Component{
       document.getElementById('btnTatar').addEventListener('click', function() {
         setLanguage('tatar');
         changeLanguage("mainpage");
+      });
+
+      document.getElementById('btn1v1').addEventListener('click', function() {
+        changeUrl("/1v1");
+      });
+
+      document.getElementById('btnMultiplay').addEventListener('click', function() {
+        changeUrl("/multi");
       });
       }
   }
