@@ -2,7 +2,7 @@ import Component from "./core/Component.js";
 import Title from "./components/Title.js";
 import MatchBoard from "./components/MatchBoard.js";
 
-export default class Tournament extends Component {
+export default class TournamentResult extends Component {
 	setup () {
 		this.state = {
 			matchs : {
