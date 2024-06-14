@@ -1,4 +1,6 @@
 var tournament = {
+    cnt: 0,
+    round: ['match1', 'match2', 'match3'],
     match1: {
         user1: '',
         user2: '',

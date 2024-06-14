@@ -1,5 +1,6 @@
 import Login from "../Login.js";
 import Tournament from "../Tournament.js";
+import TournamentResult from "../TournamentResult.js";
 import MainPage from "../MainPage.js"
 import OneVOne from "../OneVOne.js";
 import Multi from "../Multi.js";
@@ -18,10 +19,14 @@ export const routes = {
         page: new Login($app),
         css: "../css/login.css",
     },
-    // "/tournament-match": {
-    //     page: new Tournament($app),
-    //     css: "../css/tournament.css",
-    // },
+    "/tournament-result": {
+        page: new TournamentResult($app),
+        css: "../css/tournament-result.css",
+    },
+    "/tournament": {
+        page: new Tournament($app),
+        // css: "../css/main-page.css",
+    },
     "/main-page": {
         page: new MainPage($app),
         css: "../css/main-page.css",
