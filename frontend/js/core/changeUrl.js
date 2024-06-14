@@ -1,9 +1,10 @@
 import Login from "../Login.js";
-import TournamentResult from "../TournamentResult.js";
+import Tournament from "../Tournament.js";
 import MainPage from "../MainPage.js"
 import OneVOne from "../OneVOne.js";
 import Multi from "../Multi.js";
 import AI from "../AI.js";
+import { isUndefined } from "./type.js";
 
 export const $app = document.querySelector("#app");
 export const $style = document.querySelector("#page-style");
@@ -39,11 +40,15 @@ export const routes = {
 };
 
 export const changeUrl = (requestedUrl) => {
-    history.pushState(null, null, requestedUrl);
+    const routeKeys = Object.keys(routes);
+    const isnotFoundPage = routeKeys.find(elem => elem === requestedUrl);
+    const path = isUndefined(isnotFoundPage) ? '/' : requestedUrl;
 
-    if (requestedUrl === '/1v1' || requestedUrl === '/multi' || requestedUrl === '/ai')
-        routes[requestedUrl].page.gameStart();
-  
-    routes[requestedUrl].page.render();
-    $style.href = routes[requestedUrl].css;
+    history.pushState(null, null, path);
+
+    if (path === '/1v1' || path === '/multi' || path === '/ai')
+        routes[path].page.gameStart();
+
+    routes[path].page.render();
+    $style.href = routes[path].css;
 }

@@ -9,8 +9,8 @@ export default class MainPage extends Component{
       <div class="container centered-container">
       <div class="text-center d-flex flex-column justify-content-center align-items-center">
       <img class="userImage" src="../../fire.jpeg" alt="Image">
-      <p class="userInfo">Hello, Hyuim!</p>
-      <button class="btn-logout">Logout</button>
+      <p class="userInfo"> <span id="welcome">Hello</span>, Hyuim!</p>
+      <button class="btn-logout" id="logout">Logout</button>
           <button class="btn btn-primary btn-lg mb-2 d-block" id="btn1v1"></button>
           <button class="btn btn-primary btn-lg mb-2 d-block" id="btnAI"></button>
           <button class="btn btn-primary btn-lg mb-2 d-block" id="btnTournament"></button>
@@ -38,9 +38,10 @@ export default class MainPage extends Component{
     mounted () {
       const { getPageTitle } = this;
       const $title = this.$target.querySelector('[data-component="title"]');
-      setLanguage("english");
+      const language = localStorage.getItem('language') ? localStorage.getItem('language') : 'english';
+      setLanguage(language);
       changeLanguage("mainpage");
-      
+
       new Title($title, {
         getPageTitle,
       });
@@ -73,4 +74,3 @@ export default class MainPage extends Component{
       });
       }
   }
-  
