@@ -67,6 +67,10 @@ export default class MainPage extends Component{
       document.getElementById('btnMultiplay').addEventListener('click', function() {
         changeUrl("/multi");
       });
+
+      document.getElementById('btnAI').addEventListener('click', function() {
+        changeUrl("/ai");
+      });
       }
   }
   

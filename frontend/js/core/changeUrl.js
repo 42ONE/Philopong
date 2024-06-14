@@ -3,6 +3,7 @@ import Tournament from "../Tournament.js";
 import MainPage from "../MainPage.js"
 import OneVOne from "../OneVOne.js";
 import Multi from "../Multi.js";
+import AI from "../AI.js";
 
 export const $app = document.querySelector("#app");
 export const $style = document.querySelector("#page-style");
@@ -28,9 +29,9 @@ export const routes = {
         page: new OneVOne($app),
         // css: "../css/pong.css",
     },
-    // "/ai": {
-    //     page: new AI($app)
-    // },
+    "/ai": {
+        page: new AI($app)
+    },
     "/multi": {
         page: new Multi($app),
         // css: "../css/pong.css",
@@ -40,7 +41,7 @@ export const routes = {
 export const changeUrl = (requestedUrl) => {
     history.pushState(null, null, requestedUrl);
 
-    if (requestedUrl === '/1v1' || requestedUrl === '/multi')
+    if (requestedUrl === '/1v1' || requestedUrl === '/multi' || requestedUrl === '/ai')
         routes[requestedUrl].page.gameStart();
 
     routes[requestedUrl].page.render();
