@@ -6,7 +6,9 @@ let scene, camera, renderer;
 let paddle1, paddle2, ball;
 let paddleWidth = 30, paddleHeight = 200, paddleDepth = 100; // 패들 두께 추가
 let ballRadius = 15;  // 공 반지름
-let ballSpeed = { x: 10, y: 10 };  // 초기 공 속도 (x, y 방향 모두 적용)
+let xSpeed = 5;
+let ySpeed = 5;
+let ballSpeed = { x: xSpeed, y: ySpeed };  // 초기 공 속도 (x, y 방향 모두 적용)
 let paddleSpeed = 15;
 let paddle2Speed = 30;
 let noise;
@@ -16,7 +18,7 @@ let keys = { ArrowUp: false, ArrowDown: false};
 
 let score1 = 0;
 let score2 = 0;
-var myReq;
+export var myReq;
 
 function createScoreBoard() {
     // 스코어보드 컨테이너 생성
@@ -84,7 +86,7 @@ function updateScore(player) {
         document.getElementById('player1Score').textContent = `Player 1: ${score1}`;
     } else if (player === 2) {
         score2 += 1;
-        document.getElementById('AIScore').textContent = `${score2} :Player 2`;
+        document.getElementById('AIScore').textContent = `${score2} :AI`;
     }
 
     if (score1 === 3 || score2 === 3)
@@ -97,10 +99,20 @@ function updateScore(player) {
             ballSpeed.x = 0;
             ballSpeed.y = 0;
             setTimeout(() => {
-                document.body.removeChild(document.getElementsByTagName('canvas')[0]);
-                document.body.removeChild(document.getElementById('scoreBoard'));
-                document.body.removeChild(document.getElementById('winnerMessage'));
+                const $canvas = document.getElementsByTagName('canvas');
+                const $scoreBoard = document.getElementById('scoreBoard');
+                const $winnerMessage = document.getElementById('winnerMessage');
+                
                 cancelAnimationFrame(myReq);
+                if ($canvas.length > 0) {
+                    document.body.removeChild($canvas[0]);
+                }
+                if ($scoreBoard) {
+                    document.body.removeChild($scoreBoard);
+                }
+                if ($winnerMessage) {
+                    document.body.removeChild($winnerMessage);
+                }
                 changeUrl('/main-page');
             }, 1000);
         }
@@ -127,7 +139,7 @@ function resetBall() {
 // animate();
 
 export function init() {
-    ballSpeed = { x: 8, y: 8 };  // 초기 공 속도 (x, y 방향 모두 적용)
+    ballSpeed = { x: xSpeed, y: ySpeed };  // 초기 공 속도 (x, y 방향 모두 적용)
     score1 = 0;
     score2 = 0;
     // 씬 설정

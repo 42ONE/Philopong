@@ -10,8 +10,8 @@ export const $style = document.querySelector("#page-style");
 
 export const routes = {
     "/": {
-        page: new Login($app),
-        css: "../css/login.css",
+        page: new MainPage($app),
+        css: "../css/main-page.css",
     },
     "/login": {
         page: new Login($app),
@@ -43,7 +43,7 @@ export const changeUrl = (requestedUrl) => {
 
     if (requestedUrl === '/1v1' || requestedUrl === '/multi' || requestedUrl === '/ai')
         routes[requestedUrl].page.gameStart();
-
+  
     routes[requestedUrl].page.render();
     $style.href = routes[requestedUrl].css;
 }

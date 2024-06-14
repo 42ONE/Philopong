@@ -10,7 +10,7 @@ let keys = { ArrowUp: false, ArrowDown: false, w: false, s: false };
 
 let score1 = 0;
 let score2 = 0;
-var myReq;
+export var myReq;
 
 function createScoreBoard() {
     // 스코어보드 컨테이너 생성
@@ -91,10 +91,20 @@ function updateScore(player) {
             ballSpeed.x = 0;
             ballSpeed.y = 0;
             setTimeout(() => {
-                document.body.removeChild(document.getElementsByTagName('canvas')[0]);
-                document.body.removeChild(document.getElementById('scoreBoard'));
-                document.body.removeChild(document.getElementById('winnerMessage'));
+                const $canvas = document.getElementsByTagName('canvas');
+                const $scoreBoard = document.getElementById('scoreBoard');
+                const $winnerMessage = document.getElementById('winnerMessage');
+                
                 cancelAnimationFrame(myReq);
+                if ($canvas.length > 0) {
+                    document.body.removeChild($canvas[0]);
+                }
+                if ($scoreBoard) {
+                    document.body.removeChild($scoreBoard);
+                }
+                if ($winnerMessage) {
+                    document.body.removeChild($winnerMessage);
+                }
                 changeUrl('/main-page');
             }, 1000);
         }

@@ -7,7 +7,7 @@ let ballRadius = 15;  // 공 반지름
 let ballSpeed = { x: 15, y: 15 };  // 초기 공 속도 (x, y 방향 모두 적용)
 let paddleSpeed = 15;
 let keys = { ArrowUp: false, ArrowDown: false, w: false, s: false, y: false, h: false, PageUp: false, PageDown: false};
-var myReq;
+export var myReq;
 
 let score1 = 0;
 let score2 = 0;
@@ -91,11 +91,21 @@ function updateScore(team) {
         ballSpeed.x = 0;
         ballSpeed.y = 0;
         setTimeout(() => {
-            document.body.removeChild(document.getElementsByTagName('canvas')[0]);
-            document.body.removeChild(document.getElementById('scoreBoard'));
-            document.body.removeChild(document.getElementById('winnerMessage'));
-            cancelAnimationFrame(myReq);
-            changeUrl('/main-page');
+            const $canvas = document.getElementsByTagName('canvas');
+                const $scoreBoard = document.getElementById('scoreBoard');
+                const $winnerMessage = document.getElementById('winnerMessage');
+                
+                cancelAnimationFrame(myReq);
+                if ($canvas.length > 0) {
+                    document.body.removeChild($canvas[0]);
+                }
+                if ($scoreBoard) {
+                    document.body.removeChild($scoreBoard);
+                }
+                if ($winnerMessage) {
+                    document.body.removeChild($winnerMessage);
+                }
+                changeUrl('/main-page');
         }, 3000);
     }
 }
