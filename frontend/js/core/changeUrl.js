@@ -1,4 +1,5 @@
 import Login from "../Login.js";
+import TournamentStart from "../TournamentStart.js";
 import Tournament from "../Tournament.js";
 import TournamentResult from "../TournamentResult.js";
 import MainPage from "../MainPage.js"
@@ -19,13 +20,17 @@ export const routes = {
         page: new Login($app),
         css: "../css/login.css",
     },
-    "/tournament-result": {
-        page: new TournamentResult($app),
-        css: "../css/tournament-result.css",
-    },
+    // "/tournament-result": {
+    //     page: new TournamentResult($app),
+    //     css: "../css/tournament-result.css",
+    // },
     "/tournament": {
         page: new Tournament($app),
         // css: "../css/main-page.css",
+    },
+    "/tournament-start": {
+        page: new TournamentStart($app),
+        css: "../css/tournament-start.css",
     },
     "/main-page": {
         page: new MainPage($app),
@@ -51,7 +56,7 @@ export const changeUrl = (requestedUrl) => {
 
     history.pushState(null, null, path);
 
-    if (path === '/1v1' || path === '/multi' || path === '/ai')
+    if (path === '/1v1' || path === '/multi' || path === '/ai' || path === '/tournament')
         routes[path].page.gameStart();
 
     routes[path].page.render();

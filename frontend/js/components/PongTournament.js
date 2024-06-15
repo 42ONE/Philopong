@@ -1,8 +1,14 @@
 import { changeUrl } from "../core/changeUrl.js";
+import { tournamentHistory } from "../core/tournamentHistory.js";
 
-var tournament = localStorage.getItem('tournament');
-var matchName = tournament.round[tournament.cnt % 3];
-var match = tournament[matchName];
+const savedTournament = localStorage.getItem('tournament');
+if (savedTournament) {
+    Object.assign(tournamentHistory, JSON.parse(savedTournament));
+}
+
+console.log("cnt", tournamentHistory.cnt);
+var matchName;
+var match;
 let scene, camera, renderer;
 let paddle1, paddle2, ball;
 let paddleWidth = 30, paddleHeight = 200, paddleDepth = 100; // 패들 두께 추가
@@ -81,19 +87,23 @@ function createWinnerMessage(winner) {
 function updateScore(player) {
     if (player === 1) {
         score1 += 1;
-        document.getElementById('player1Score').textContent = `Player 1: ${score1}`;
+        const player1Name = match.user1;
+        document.getElementById('player1Score').textContent = `${player1Name}: ${score1}`;
     } else if (player === 2) {
         score2 += 1;
-        document.getElementById('player2Score').textContent = `${score2} :Player 2`;
+        const player2Name = match.user2;
+        document.getElementById('player2Score').textContent = `${score2} :${player2Name}`;
     }
 
     if (score1 === 3 || score2 === 3)
         {
+            let matchWinner;
             if (score1 === 3) {
-                createWinnerMessage(match.user1);
-            } else if (score2 === 3) {
-                createWinnerMessage(match.user2);
+                matchWinner = match.user1;
+            } else {
+                matchWinner = match.user2;
             }
+            createWinnerMessage(matchWinner);
             ballSpeed.x = 0;
             ballSpeed.y = 0;
             setTimeout(() => {
@@ -112,12 +122,26 @@ function updateScore(player) {
                     document.body.removeChild($winnerMessage);
                 }
 
-                tournament.cnt++;
-                localStorage.setItem('tournament', tournament);
-                if (tournament.cnt % 3 == 2)
+                tournamentHistory[matchName].winner = matchWinner;
+                tournamentHistory[matchName].score1 = score1;
+                tournamentHistory[matchName].score2 = score2;
+                tournamentHistory.cnt++;
+                
+                localStorage.removeItem('tournament');
+                localStorage.setItem('tournament', JSON.stringify(tournamentHistory));
+                var savedTournament1 = localStorage.getItem('tournament');
+                console.log("here", savedTournament1);
+                var t = JSON.parse(savedTournament1);
+                // Object.assign(t, JSON.parse(savedTournament1));
+                console.log(t);
+                if (t.cnt === 3)
+                {   
                     changeUrl('/tournament-result');
+                }
                 else
+                {
                     changeUrl('/tournament');
+                }
             }, 1000);
         }
 }
@@ -146,6 +170,8 @@ export function init() {
     ballSpeed = { x: 10, y: 10 };  // 초기 공 속도 (x, y 방향 모두 적용)
     score1 = 0;
     score2 = 0;
+    matchName = tournamentHistory.round[tournamentHistory.cnt];
+    match = tournamentHistory[matchName];
     // 씬 설정
     scene = new THREE.Scene();
 

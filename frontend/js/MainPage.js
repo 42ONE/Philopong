@@ -69,6 +69,10 @@ export default class MainPage extends Component{
         changeUrl("/multi");
       });
 
+      document.getElementById('btnTournament').addEventListener('click', function() {
+        changeUrl("/tournament-start");
+      });
+
       document.getElementById('btnAI').addEventListener('click', function() {
         changeUrl("/ai");
       });

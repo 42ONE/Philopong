@@ -1,4 +1,4 @@
-var tournament = {
+export var tournamentHistory = {
     cnt: 0,
     round: ['match1', 'match2', 'match3'],
     match1: {
@@ -24,5 +24,4 @@ var tournament = {
     },
 }
 
-localStorage.setItem('tournament', tournament);
-//localStorage.getItem('tournament');로 꺼내다 쓰시면 됩니다
+localStorage.setItem('tournament', JSON.stringify(tournamentHistory));

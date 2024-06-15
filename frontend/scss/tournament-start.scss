@@ -1,0 +1,100 @@
+@import 'colors';
+@import 'fonts';
+@import 'title';
+
+body {
+    background-color: $background-color;
+}
+
+h1 {
+    font-family: $primary-font;
+    color: $primary-color;
+}
+
+button.btn-lg {
+    margin-top: 30px;
+}
+
+.lead {
+    font-size: 1.5em;
+    font-family: $primary-font;
+    color: $primary-color;
+}
+
+.form-control {
+    color: $background-color;
+    margin-bottom: 30px;
+    border-color: $text-color;
+    background-color: $background-color;
+    &::placeholder {
+        color: $text-color;
+    }
+    
+    
+    &:focus {
+        color: $text-color;
+        background-color: $background-color;
+    }
+}
+
+.form-label {
+    color: $text-color;
+}
+
+.btn {
+    border-color: $primary-color;
+    background-color: $background-color;
+    &:hover {
+        background-color: $hover-color;
+    }
+}
+
+
+label {
+    color: $text-color;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: $background-color;
+}
+.container {
+    text-align: center;
+    background-color: $background-color;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+.container h1 {
+    margin-bottom: 20px;
+}
+.input-group {
+    margin-bottom: 15px;
+}
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+.input-group input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.submit-btn {
+    background-color: $primary-color;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.submit-btn:hover {
+    background-color: $hover-color;
+}

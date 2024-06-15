@@ -1,5 +1,6 @@
 import { changeUrl , routes, $style } from "./core/changeUrl.js";
 import { isUndefined } from "./core/type.js";
+import { tournamentHistory } from "./core/tournamentHistory.js";
 
 const routeKeys = Object.keys(routes);
 const isNotFoundPage = routeKeys.find(elem => elem === window.location.pathname);

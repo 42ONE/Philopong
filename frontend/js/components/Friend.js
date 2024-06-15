@@ -28,8 +28,6 @@ export default class Friend extends Component {
     this.$target.addEventListener('click', ({ target }) => {
       const friends = [ ...this.state.friends ];
       
-      console.log(target);
-      console.log(friends);
       if (target.classList.contains('deleteFriend')) {
         friends.splice(target.dataset.index, 1);
         this.setState({ friends });
