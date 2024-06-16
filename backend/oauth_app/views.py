@@ -20,6 +20,10 @@ def login(request):
         client_id=CLIENT_ID,
         redirect_uri=REDIRECT_URI,
     )
+    # authorize_url 출력
+    print("start\n")
+    print(authorize_url)
+    print("end\n")
     # 리다이렉션 URL 반환
     return JsonResponse({'authorize_url': authorize_url})
 
@@ -37,6 +41,7 @@ def callback(request):
         'redirect_uri': REDIRECT_URI,
     }
 
+    # 액세스 토큰 요청, 응답 받기, JSON으로 파싱
     token_response = requests.post(token_url, data=token_data)
     token_json = token_response.json()
     access_token = token_json.get('access_token')
@@ -46,4 +51,10 @@ def callback(request):
     user_info_response = requests.get(user_info_url, headers=headers)
 
     user_info = user_info_response.json()
-    return JsonResponse(user_info)
+    print("callback 함수 start\n")
+    print (JsonResponse(user_info))
+    print("callback 함수 end\n")
+    # 127.0.0.1/3000/main으로 리다이렉션
+    return redirect('http://127.0.0.1:3000/main-page')
+
+    #return JsonResponse(user_info)
