@@ -6,7 +6,7 @@ if (savedTournament) {
     Object.assign(tournamentHistory, JSON.parse(savedTournament));
 }
 
-console.log("cnt", tournamentHistory.cnt);
+// console.log("cnt", tournamentHistory.cnt);
 var matchName;
 var match;
 let scene, camera, renderer;
@@ -49,7 +49,7 @@ function createScoreBoard() {
     VS.textContent = " VS ";
     VS.style.marginRight = '20px';
     VS.style.display = 'inline-block';
-    
+
     // 플레이어 2의 점수
     const player2Name = match.user2;
     const player2Score = document.createElement('span');
@@ -110,7 +110,7 @@ function updateScore(player) {
                 const $canvas = document.getElementsByTagName('canvas');
                 const $scoreBoard = document.getElementById('scoreBoard');
                 const $winnerMessage = document.getElementById('winnerMessage');
-                
+
                 cancelAnimationFrame(myReq);
                 if ($canvas.length > 0) {
                     document.body.removeChild($canvas[0]);
@@ -126,16 +126,20 @@ function updateScore(player) {
                 tournamentHistory[matchName].score1 = score1;
                 tournamentHistory[matchName].score2 = score2;
                 tournamentHistory.cnt++;
-                
+                if (tournamentHistory.cnt === 2)
+                {
+                    tournamentHistory['match3'].user1 = tournamentHistory['match1'].winner;
+                    tournamentHistory['match3'].user2 = tournamentHistory['match2'].winner;
+                }
                 localStorage.removeItem('tournament');
                 localStorage.setItem('tournament', JSON.stringify(tournamentHistory));
                 var savedTournament1 = localStorage.getItem('tournament');
-                console.log("here", savedTournament1);
+                // console.log("here", savedTournament1);
                 var t = JSON.parse(savedTournament1);
                 // Object.assign(t, JSON.parse(savedTournament1));
-                console.log(t);
+                // console.log(t);
                 if (t.cnt === 3)
-                {   
+                {
                     changeUrl('/tournament-result');
                 }
                 else
@@ -370,6 +374,6 @@ export function animate() {
     //     ballSpeed.x = -ballSpeed.x;
     // }
     checkScore();
-    
+
     renderer.render(scene, camera);
 }

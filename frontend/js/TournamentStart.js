@@ -38,7 +38,7 @@ export default class TournamentStart extends Component {
 	mounted () {
         changeLanguage("tournament-start");
 
-        
+
 
         document.getElementById('start').addEventListener('click', function(e) {
             e.preventDefault();
@@ -55,7 +55,7 @@ export default class TournamentStart extends Component {
                 tournamentHistory.match2.user1 = player3;
                 tournamentHistory.match2.user2 = player4;
                 localStorage.setItem('tournament', JSON.stringify(tournamentHistory));
-                console.log(localStorage.getItem('tournament'));
+                // console.log(localStorage.getItem('tournament'));
                 changeUrl("/tournament");
             }
           });

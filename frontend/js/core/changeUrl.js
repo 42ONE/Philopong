@@ -20,10 +20,10 @@ export const routes = {
         page: new Login($app),
         css: "../css/login.css",
     },
-    // "/tournament-result": {
-    //     page: new TournamentResult($app),
-    //     css: "../css/tournament-result.css",
-    // },
+    "/tournament-result": {
+        page: new TournamentResult($app),
+        css: "../css/tournament-result.css",
+    },
     "/tournament": {
         page: new Tournament($app),
         // css: "../css/main-page.css",

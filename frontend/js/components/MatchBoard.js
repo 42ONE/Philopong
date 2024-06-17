@@ -2,26 +2,71 @@ import Component from "../core/Component.js";
 
 export default class MatchBoard extends Component {
 	template() {
-		const { players } = this.props;
-		return players.map(({name, profile}) =>
-				`
+		// console.log(this.props);
+		const { final, match } = this.props;
+		let tags;
+		console.log(match);
+		if (final === true)
+		{
+			tags =  `
 				<li class="tournament-bracket__item">
 				<div class="tournament-bracket__match">
 				  <table class="tournament-bracket__table">
 					<tbody class="tournament-bracket__content">
 					  <tr>
 						<td class="tournament-bracket__score d-flex justify-content-center">
-							<img style="max-width:100%; width: 40px; height:40px; border-radius: 100%;" src="${profile}" class alt="">
+							<span style="color: #000; font-weight: bold;">🏆🏆</span>
 						</td>
 						<td class="tournament-bracket__player" style="text-align: center;">
-						  <span style="color: #000; font-weight: bold;">${name}</span>
+						  <span style="color: #000; font-weight: bold;">${match.winner}</span>
 						</td>
 					  </tr>
 					</tbody>
 				  </table>
 				</div>
 			  </li>
-				`
-			).join('');
+			  `
+		}
+		else {
+			console.log("else!");
+			tags = match.map(({ user1, user2, score1, score2, winner }) =>
+			`
+				<li class="tournament-bracket__item">
+				<div class="tournament-bracket__match">
+				  <table class="tournament-bracket__table">
+					<tbody class="tournament-bracket__content" ${user1 !== winner ? 'style="opacity: 0.5;"' : ""}>
+					  <tr>
+						<td class="tournament-bracket__score d-flex justify-content-center">
+							<span style="color: #000; font-weight: bold;">${score1}</span>
+						</td>
+						<td class="tournament-bracket__player" style="text-align: center;">
+						  <span style="color: #000; font-weight: bold;">${user1}</span>
+						</td>
+					  </tr>
+					</tbody>
+				  </table>
+				</div>
+			  </li>
+			  <li class="tournament-bracket__item">
+				<div class="tournament-bracket__match">
+				  <table class="tournament-bracket__table">
+					<tbody class="tournament-bracket__content" ${user2 !== winner ? 'style="opacity: 0.5;"' : ""}>
+					  <tr>
+						<td class="tournament-bracket__score d-flex justify-content-center">
+							<span style="color: #000; font-weight: bold;">${score2}</span>
+						</td>
+						<td class="tournament-bracket__player" style="text-align: center;">
+						  <span style="color: #000; font-weight: bold;">${user2}</span>
+						</td>
+					  </tr>
+					</tbody>
+				  </table>
+				</div>
+			  </li>
+		`
+		).join('');
+		}
+		// console.log(tags);
+		return tags;
 	}
 }

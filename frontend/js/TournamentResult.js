@@ -1,25 +1,14 @@
 import Component from "./core/Component.js";
 import Title from "./components/Title.js";
 import MatchBoard from "./components/MatchBoard.js";
+import { changeUrl } from "./core/changeUrl.js";
 
 export default class TournamentResult extends Component {
 	setup () {
+
+		const result = JSON.parse(localStorage.getItem('tournament'));
 		this.state = {
-			matchs : {
-				semifinal: [
-					{ name: "hyuim", profile: "../images/philopong.webp" },
-					{ name: "woosekim", profile: "../images/philopong.webp" },
-					{ name: "phan", profile: "../images/philopong.webp" },
-					{ name: "hcho2", profile: "../images/philopong.webp" },
-				],
-				final: [
-					{ name: "woosekim", profile: "../images/philopong.webp" },
-					{ name: "phan", profile: "../images/philopong.webp" },
-				],
-				winner: [
-					{ name: "phan", profile: "../images/philopong.webp" },
-				]
-			}
+			...result
 		}
 	}
 
@@ -43,6 +32,9 @@ export default class TournamentResult extends Component {
 					</ul>
 				</div>
 			</main>
+			<footer class="mt-5">
+				<button class="btn btn-primary btn-lg mb-2 d-block" id="go-main">메인으로 가기</button>
+			</footer>
 		`;
 	}
 
@@ -57,13 +49,21 @@ export default class TournamentResult extends Component {
 			getPageTitle,
 		});
 
-		const { semifinal, final, winner } = this.state.matchs;
+		const result = JSON.parse(localStorage.getItem('tournament'));
+		const match1 = result.match1;
+		const match2 = result.match2;
+		const match3 = result.match3;
+		const winner = { winner: match3.winner}
 
-		new MatchBoard($semiFinal, { players: semifinal });
+		new MatchBoard($semiFinal, {final: false, match: [match1, match2] });
 
-		new MatchBoard($final, { players: final });
+		new MatchBoard($final, {final: false, match: [match3] });
 
-		new MatchBoard($winner, { players: winner });
+		new MatchBoard($winner, {final: true, match: winner });
+
+		document.getElementById('go-main').addEventListener('click', function() {
+			changeUrl("/");
+		  });
 	}
 
 	get getPageTitle () {
