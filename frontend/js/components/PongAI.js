@@ -207,9 +207,6 @@ export function init() {
     paddle1.position.set(-window.innerWidth / 2 + paddleWidth / 2, 0, 0);
     paddle2.position.set(window.innerWidth / 2 - paddleWidth / 2, 0, 0);
 
-    // console.log("pos x : ", paddle1.position.x, paddle2.position.y);
-    // console.log("width : ", canvas.width);
-    // console.log("height : ", canvas.height);
     // 그림자 설정
     paddle1.castShadow = true;
     paddle1.receiveShadow = true;
@@ -317,13 +314,11 @@ function checkBallPaddleCollision() {
 }
 
 function updateBallPosition() {
-    console.log("updateBall");
     noise = 0;
     ballPositionY = ball.position.y;
 }
 
 function updatePaddle2Position() {
-    console.log("updatePaddle2Position");
     if (!ballPositionY) return; // ballPositionY가 초기화되지 않았을 때는 동작하지 않음
 
     let distance = ballPositionY - paddle2.position.y;
@@ -337,9 +332,6 @@ function updatePaddle2Position() {
 export function animate() {
     myReq = requestAnimationFrame(animate);
 
-    // console.log("paddle1 position : ", paddle1.position.x, paddle1.position.y);
-    // console.log("paddle2 position : ", paddle2.position.x, paddle2.position.y);
-    // console.log("paddle2 position : ", paddle2.position.x, paddle2.position.y);
 
     // 패들 이동
     if (keys.w && paddle1.position.y < window.innerHeight / 2 - paddleHeight / 2) {

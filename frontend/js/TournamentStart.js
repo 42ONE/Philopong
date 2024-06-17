@@ -55,7 +55,6 @@ export default class TournamentStart extends Component {
                 tournamentHistory.match2.user1 = player3;
                 tournamentHistory.match2.user2 = player4;
                 localStorage.setItem('tournament', JSON.stringify(tournamentHistory));
-                // console.log(localStorage.getItem('tournament'));
                 changeUrl("/tournament");
             }
           });

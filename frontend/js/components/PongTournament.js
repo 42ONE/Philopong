@@ -6,7 +6,6 @@ if (savedTournament) {
     Object.assign(tournamentHistory, JSON.parse(savedTournament));
 }
 
-// console.log("cnt", tournamentHistory.cnt);
 var matchName;
 var match;
 let scene, camera, renderer;
@@ -95,10 +94,10 @@ function updateScore(player) {
         document.getElementById('player2Score').textContent = `${score2} :${player2Name}`;
     }
 
-    if (score1 === 3 || score2 === 3)
+    if (score1 === 1 || score2 === 1)
         {
             let matchWinner;
-            if (score1 === 3) {
+            if (score1 === 1) {
                 matchWinner = match.user1;
             } else {
                 matchWinner = match.user2;
@@ -134,10 +133,8 @@ function updateScore(player) {
                 localStorage.removeItem('tournament');
                 localStorage.setItem('tournament', JSON.stringify(tournamentHistory));
                 var savedTournament1 = localStorage.getItem('tournament');
-                // console.log("here", savedTournament1);
                 var t = JSON.parse(savedTournament1);
                 // Object.assign(t, JSON.parse(savedTournament1));
-                // console.log(t);
                 if (t.cnt === 3)
                 {
                     changeUrl('/tournament-result');

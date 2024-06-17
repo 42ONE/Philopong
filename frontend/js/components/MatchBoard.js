@@ -2,10 +2,8 @@ import Component from "../core/Component.js";
 
 export default class MatchBoard extends Component {
 	template() {
-		// console.log(this.props);
 		const { final, match } = this.props;
 		let tags;
-		console.log(match);
 		if (final === true)
 		{
 			tags =  `
@@ -28,7 +26,6 @@ export default class MatchBoard extends Component {
 			  `
 		}
 		else {
-			console.log("else!");
 			tags = match.map(({ user1, user2, score1, score2, winner }) =>
 			`
 				<li class="tournament-bracket__item">
@@ -66,7 +63,6 @@ export default class MatchBoard extends Component {
 		`
 		).join('');
 		}
-		// console.log(tags);
 		return tags;
 	}
 }

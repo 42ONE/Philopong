@@ -450,4 +450,12 @@ h2 {
   color: #CD7F32;
 }
 
+.btn {
+  margin-top: 10%;
+  margin-left: 44%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /*# sourceMappingURL=tournament-result.css.map */

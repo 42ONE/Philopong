@@ -17,29 +17,32 @@ export default class TournamentResult extends Component {
 			<header class="text-point-color d-flex justify-content-center py-3 title" data-component="title"></header>
 			<main class="container tournament-bracket tournament-bracket--rounded">
 				<div class="tournament-bracket__round tournament-bracket__round--quarterfinals">
-					<h3 class="tournament-bracket__round-title">semi final</h3>
+					<h3 class="tournament-bracket__round-title" id="semi-final"></h3>
 					<ul class="tournament-bracket__list" data-component="semifinals-players">
 					</ul>
 				</div>
 				<div class="tournament-bracket__round tournament-bracket__round--semifinals">
-					<h3 class="tournament-bracket__round-title">final</h3>
+					<h3 class="tournament-bracket__round-title" id="final"></h3>
 					<ul class="tournament-bracket__list" data-component="final-players">
 					</ul>
 				</div>
 				<div class="tournament-bracket__round tournament-bracket__round--gold">
-					<h3 class="tournament-bracket__round-title">winner</h3>
+					<h3 class="tournament-bracket__round-title" id="winner"></h3>
 					<ul class="tournament-bracket__list" data-component="winner-player">
 					</ul>
 				</div>
 			</main>
 			<footer class="mt-5">
-				<button class="btn btn-primary btn-lg mb-2 d-block" id="go-main">메인으로 가기</button>
+				<div class="container centered-container">
+					<button class="btn btn-primary btn-lg mb-2" id="go-main"></button>
+				</div>
 			</footer>
 		`;
 	}
 
 	mounted () {
 		const { getPageTitle } = this;
+		changeLanguage("tournament-result");
 		const $title = this.$target.querySelector('[data-component="title"]');
 		const $semiFinal = this.$target.querySelector('[data-component="semifinals-players"]');
 		const $final = this.$target.querySelector('[data-component="final-players"]');

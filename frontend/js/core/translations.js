@@ -12,6 +12,10 @@ window.translations = {
         enterNick: "Enter Player Nicknames",
         player: "Player",
         start: "Start",
+        goMain: "go to Main",
+        semiFinal: "Semi-final",
+        final: "Final",
+        winner: "Winner",
     },
     korean: {
         welcome: '반가워요',
@@ -25,6 +29,10 @@ window.translations = {
         enterNick: "닉네임을 입력하세요",
         player: "플레이어",
         start: "시작",
+        goMain: "메인 화면으로",
+        semiFinal: "준결승",
+        final: "결승",
+        winner: "우승자",
     },
     tatar: {
         welcome: 'Сәлам',
@@ -38,6 +46,10 @@ window.translations = {
         enterNick: "Плеер кушаматларын кертегез",
         player: "Плеер",
         start: "Башлау",
+        goMain: "Төп экранга",
+        semiFinal: "ярымфинал",
+        final: "финал",
+        winner: "җиңүче",
     },
 }
 
@@ -65,5 +77,12 @@ function changeLanguage(page) {
         document.querySelector('#p3').textContent = `${window.translations[language].player} 3`;    
         document.querySelector('#p4').textContent = `${window.translations[language].player} 4`;    
         document.querySelector('#start').textContent = window.translations[language].start;    
+    }
+    else if (page == "tournament-result")
+    {
+        document.querySelector('#semi-final').textContent = window.translations[language].semiFinal;    
+        document.querySelector('#final').textContent = window.translations[language].final;    
+        document.querySelector('#winner').textContent = window.translations[language].winner;    
+        document.querySelector('#go-main').textContent = window.translations[language].goMain;    
     }
 }
