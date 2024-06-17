@@ -15,4 +15,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project
 COPY . /app/
 
+RUN python manage.py makemigrations userinfo_app
 RUN python manage.py migrate
+# RUN python manage.py migrate userinfo_app 0001

@@ -1,6 +1,8 @@
 from django.shortcuts import redirect
 from django.http import JsonResponse
 import requests
+from django.utils import timezone
+from userinfo_app.models import User
 
 # 42 API 클라이언트 ID와 비밀
 CLIENT_ID = 'u-s4t2ud-55550ebcca6cb44059fcd2728d70aad8b98968c87439b28c0548e035f09cc684'
@@ -50,11 +52,31 @@ def callback(request):
     headers = {'Authorization': f'Bearer {access_token}'}
     user_info_response = requests.get(user_info_url, headers=headers)
 
+    # userinfo에서 필요한 정보를 models에 저장하는 코드 작성
     user_info = user_info_response.json()
-    print("callback 함수 start\n")
-    print (JsonResponse(user_info))
-    print("callback 함수 end\n")
+
+    email = user_info.get('email')
+    login = user_info.get('login')  # 이 필드를 intra_id로 사용
+    image_url = user_info.get('image', {}).get('link')
+    created_at = timezone.now()
+
+    # 데이터베이스에 저장할 User 객체 생성 또는 업데이트
+    user, created = User.objects.update_or_create(
+        intra_id=login,
+        defaults={
+            'email': email,
+            'social_access_token': access_token,
+            'social_refresh_token': token_json.get('refresh_token'),
+            # 토큰의 만료 시간을 유효하게 설정 (기본값 3600초)
+            'token_expiration_time': timezone.now() + timezone.timedelta(seconds=token_json.get('expires_in', 3600) or 3600),
+            'lang': user_info.get('languages_users', [{}])[0].get('language_id', 'en'),  # 언어 설정, 기본값 'en'
+            'created_at': created_at,
+            'image_url': image_url,
+        }
+    )
+
+
     # 127.0.0.1/3000/main으로 리다이렉션
     return redirect('http://127.0.0.1:3000/main-page')
 
-    #return JsonResponse(user_info)
+    # return JsonResponse(user_info)

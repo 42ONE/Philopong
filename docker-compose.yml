@@ -9,6 +9,8 @@ services:
       POSTGRES_DB: pongdb
       POSTGRES_USER: ponguser
       POSTGRES_PASSWORD: pongpassword
+    # ports:
+    #   - "5432:5432"
 
   web:
     build: ./backend

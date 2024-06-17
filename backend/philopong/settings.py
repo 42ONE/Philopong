@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'userinfo_app',
     'oauth_app',
     'django.contrib.admin',
     'corsheaders',
@@ -126,7 +127,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# 서울시간
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
