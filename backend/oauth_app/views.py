@@ -46,4 +46,5 @@ def callback(request):
     user_info_response = requests.get(user_info_url, headers=headers)
 
     user_info = user_info_response.json()
-    return JsonResponse(user_info)
+    return redirect('http://127.0.0.1:3000/main-page')
+    # return JsonResponse(user_info)
