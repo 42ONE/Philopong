@@ -14,5 +14,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy project
 COPY . /app/
+RUN chmod +x /app/scripts/initdjango.sh
 
-RUN python manage.py migrate
+RUN apt-get update && apt-get install -y postgresql-client \
+    dumb-init 
+RUN pip install psycopg2-binary
+
+# RUN python manage.py migrate
+# CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["sh", "/app/scripts/initdjango.sh"]
