@@ -3,6 +3,7 @@
 from requests_oauthlib import OAuth2Session
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.contrib.auth.backends import BaseBackend
 
 class FortyTwoOAuth2:
     def __init__(self):
@@ -29,15 +30,31 @@ class FortyTwoOAuth2:
         )
         return token
 
-    def get_user_info(self, token):
-        forty_two = OAuth2Session(self.client_id, token=token)
-        response = forty_two.get(self.user_info_url)
-        return response.json()
+    def get_user_info(self, token): # 사용자 정보 가져오기
+        forty_two = OAuth2Session(self.client_id, token=token) # OAuth2Session 객체 생성
+        response = forty_two.get(self.user_info_url) # 사용자 정보 요청
+        return response.json() # JSON 형태로 반환
 
-    def authenticate(self, token):
-        user_info = self.get_user_info(token)
-        try:
-            user = User.objects.get(username=user_info['login'])
-        except User.DoesNotExist:
-            user = User.objects.create(username=user_info['login'], first_name=user_info['first_name'], last_name=user_info['last_name'], email=user_info['email'])
+    def authenticate(self, token): # 사용자 정보를 가져와서 User 객체를 반환
+        user_info = self.get_user_info(token) # 사용자 정보 가져오기
+        try: # 사용자 정보로 User 객체 가져오기
+            user = User.objects.get(username=user_info['login']) # username으로 User 객체 가져오기
+        except User.DoesNotExist: # User 객체가 없으면 새로 생성
+            user = User.objects.create(username=user_info['login'], first_name=user_info['first_name'], last_name=user_info['last_name'], email=user_info['email']) # User 객체 생성
         return user
+
+# oauth_app/backends.py
+
+class FortyTwoOAuth2Backend(BaseBackend):
+    def authenticate(self, request, username=None, email=None, **kwargs):
+        try:
+            user = User.objects.get(username=username)
+            return user
+        except User.DoesNotExist:
+            return None
+
+    def get_user(self, user_id):
+        try:
+            return User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            return None
