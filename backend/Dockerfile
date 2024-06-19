@@ -20,6 +20,10 @@ RUN apt-get update && apt-get install -y postgresql-client \
     dumb-init \
     procps
 RUN pip install psycopg2-binary
+RUN pip install requests requests-oauthlib
+RUN pip install django-cors-headers
+
+
 
 ENTRYPOINT ["/usr/bin/dumb-init","--","/app/scripts/initdjango.sh"]
 

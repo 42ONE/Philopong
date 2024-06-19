@@ -5,7 +5,7 @@ import requests
 # 42 API 클라이언트 ID와 비밀
 CLIENT_ID = 'u-s4t2ud-55550ebcca6cb44059fcd2728d70aad8b98968c87439b28c0548e035f09cc684'
 CLIENT_SECRET = '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'
-REDIRECT_URI = 'http://127.0.0.1:8000/oauth/callback/'
+REDIRECT_URI = 'http://127.0.0.1:8000/oauth/login/callback/'
 
 # 인덱스 뷰 - OAuth2 인증 페이지로 리디렉션
 def login(request):
@@ -48,3 +48,5 @@ def callback(request):
     user_info = user_info_response.json()
     return redirect('http://127.0.0.1:3000/main-page')
     # return JsonResponse(user_info)
+
+

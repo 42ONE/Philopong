@@ -47,6 +47,11 @@ export const routes = {
         page: new Multi($app),
         // css: "../css/pong.css",
     },
+    "/login_check": {
+        page: new OneVOne($app),
+    },
+        
+
 };
 
 export const changeUrl = (requestedUrl) => {
@@ -56,9 +61,32 @@ export const changeUrl = (requestedUrl) => {
 
     history.pushState(null, null, path);
 
-    if (path === '/1v1' || path === '/multi' || path === '/ai' || path === '/tournament')
-        routes[path].page.gameStart();
+    console.log("here");
+    if (path === '/1v1')
+    {
+        checkLoginStatus();
+    }
+    // if (path === '/1v1' || path === '/multi' || path === '/ai' || path === '/tournament')
+    //     routes[path].page.gameStart();
 
     routes[path].page.render();
     $style.href = routes[path].css;
+}
+
+function checkLoginStatus() {
+    fetch('http://localhost:8000/oauth/check_login_status', {
+        credentials: 'include'  // 세션 정보를 포함하여 요청
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.logged_in) {
+            console.log(`User is logged in as ${data.username}`);
+            // 로그인된 사용자에게 보여줄 화면을 표시하거나 데이터를 가져오는 로직 추가
+        } else {
+            console.log('User is not logged in');
+            // 로그인 페이지로 리다이렉트 등 처리
+            window.location.href = '/login-page';
+        }
+    })
+    .catch(error => console.error('Error:', error));
 }
