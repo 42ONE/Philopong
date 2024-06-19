@@ -47,9 +47,9 @@ export const routes = {
         page: new Multi($app),
         // css: "../css/pong.css",
     },
-    "/login_check": {
-        page: new OneVOne($app),
-    },
+    // "/login_check": {
+    //     page: new OneVOne($app),
+    // },
         
 
 };
@@ -74,19 +74,39 @@ export const changeUrl = (requestedUrl) => {
 }
 
 function checkLoginStatus() {
-    fetch('http://localhost:8000/oauth/check_login_status', {
+    // Define the URL and request options
+    const url = 'http://127.0.0.1:8000/oauth/check_login_status';
+    const options = {
         credentials: 'include'  // 세션 정보를 포함하여 요청
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.logged_in) {
-            console.log(`User is logged in as ${data.username}`);
-            // 로그인된 사용자에게 보여줄 화면을 표시하거나 데이터를 가져오는 로직 추가
-        } else {
-            console.log('User is not logged in');
-            // 로그인 페이지로 리다이렉트 등 처리
-            window.location.href = '/login-page';
-        }
-    })
-    .catch(error => console.error('Error:', error));
+    };
+
+    // Log the URL and request options before making the request
+    console.log('Request URL:', url);
+    console.log('Request Options:', options);
+
+    fetch(url, options)
+        .then(response => {
+            // Log response details before processing the JSON
+            console.log('---------------------------------');
+            console.log('Response Status:', response.status);
+            console.log('Response Headers:', Array.from(response.headers.entries()));
+            console.log('---------------------------------');
+
+            return response.json();
+        })
+        .then(data => {
+            // Log the response data
+            console.log('Response Data:', data);
+
+            if (data.logged_in) {
+                console.log(`User is logged in as ${data.username}`);
+                window.location.href = 'main-page';
+                // 로그인된 사용자에게 보여줄 화면을 표시하거나 데이터를 가져오는 로직 추가
+            } else {
+                console.log('User is not logged in');
+                // 로그인 페이지로 리다이렉트 등 처리
+                window.location.href = '/login';
+            }
+        })
+        .catch(error => console.error('Error:', error));
 }

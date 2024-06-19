@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 # 42oauth를 위한 추가
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # 허용할 프론트엔드 주소
+    "http://127.0.0.1:3000",  # 허용할 프론트엔드 주소
 ]
 
 # AUTH_USER_MODEL = 'User'
@@ -70,6 +71,20 @@ CORS_ALLOW_ALL_ORIGINS = True  # 개발 중에는 이 옵션을 사용할 수 �
 
 # 추가적인 CORS 설정
 CORS_ALLOW_CREDENTIALS = True
+# CORS_ALLOW_HEADERS = [  # 요청 헤더 중 허용할 것만 추가 가능
+#     'accept',
+#     'accept-encoding',
+#     'authorization',
+#     'content-type',
+#     'dnt',
+#     'origin',
+#     'user-agent',
+#     'x-csrftoken',
+#     'x-requested-with',
+#     #쿠키,세션 모두 추가
+#     'cookie',
+#     'sessionid',
+# ]
 
 ROOT_URLCONF = 'philopong.urls'
 
@@ -203,3 +218,12 @@ logging.basicConfig(level=logging.DEBUG)
 requests_log = logging.getLogger("requests.packages.urllib3")
 requests_log.setLevel(logging.DEBUG)
 requests_log.propagate = True
+
+# 기본 로그인 URL 설정
+LOGIN_URL = '/oauth/login/'
+
+# 세션 쿠키 설정
+SESSION_COOKIE_NAME = 'sessionid'
+SESSION_COOKIE_SECURE = False  # 개발 환경에서는 False, 프로덕션에서는 True로 설정
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'  # 또는 'Strict', 크로스 사이트 요청을 허용하려면 'None'
