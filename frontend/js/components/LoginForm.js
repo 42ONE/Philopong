@@ -22,7 +22,7 @@ export default class LoginForm extends Component {
     setEvent() {
         const { login } = this.props;
         this.addEvent('click', '#login-btn', (event) => {
-            const response = fetch('http://localhost:8000/oauth/login')
+            const response = fetch('https://127.0.0.1:8000/oauth/login')
                 .then(response => response.json())
                 .then(data => {
                     window.location.href = data.authorize_url;

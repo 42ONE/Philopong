@@ -11,6 +11,7 @@ RUN mkdir -p /ssl_files && \
     -x509 -days 365 -out /ssl_files/my_ssl.crt \
     -subj "/C=KO/ST=Seoul/L=Gaepo/O=42Seoul/OU=hyuim/CN=localhost"
 
+
 # Copy nginx config file
 COPY ./config/nginx.conf /etc/nginx/nginx.conf
 

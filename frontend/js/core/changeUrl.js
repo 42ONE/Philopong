@@ -74,7 +74,7 @@ export const changeUrl = async (requestedUrl) => {
 
 export async function checkLoginStatus() {
     // Define the URL and request options
-    const url = 'http://127.0.0.1:8000/oauth/check_login_status';
+    const url = 'https://127.0.0.1:8000/oauth/check_login_status';
     const options = {
         credentials: 'include'  // 세션 정보를 포함하여 요청
     };

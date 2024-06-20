@@ -12,7 +12,7 @@ class FortyTwoOAuth2:
         self.authorization_base_url = 'https://api.intra.42.fr/oauth/authorize'
         self.token_url = 'https://api.intra.42.fr/oauth/token'
         self.user_info_url = 'https://api.intra.42.fr/v2/me'
-        self.redirect_uri = 'http://127.0.0.1:8000/oauth/login/callback/'  # 설정한 redirect_uri
+        self.redirect_uri = 'https://127.0.0.1:8000/oauth/login/callback/'  # 설정한 redirect_uri
 
     def get_authorization_url(self):
         forty_two = OAuth2Session(self.client_id, redirect_uri=self.redirect_uri)

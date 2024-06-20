@@ -35,6 +35,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+	'sslserver',
     'django.contrib.sessions', # 42oauth를 위한 추가(로그인유무)
     'django.contrib.sites', # 42oauth를 위한 추가
     'oauth_app',
@@ -227,3 +228,13 @@ SESSION_COOKIE_NAME = 'sessionid'
 SESSION_COOKIE_SECURE = False  # 개발 환경에서는 False, 프로덕션에서는 True로 설정
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'  # 또는 'Strict', 크로스 사이트 요청을 허용하려면 'None'
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# DEBUG = True
+
+# SSL 관련 설정 무시
+# 실제 운영 환경에서는 사용하지 않는 것이 좋습니다.
+# os.environ['HTTPS'] = "on"

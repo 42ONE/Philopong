@@ -25,7 +25,7 @@ def fortytwo_callback(request):
         # 사용자 객체에 backend 속성 추가
         user.backend = 'oauth_app.backends.FortyTwoOAuth2Backend'
         login(request, user)  # Django의 인증 시스템 사용
-        return redirect('http://127.0.0.1:3000/main-page')
+        return redirect('https://127.0.0.1:3000/main-page')
     else:
         return HttpResponse("Authentication failed", status=401)
 
@@ -48,7 +48,7 @@ def check_login_status(request: HttpRequest):
     logger.info(f"Request Cookies: {request.COOKIES}")
     logger.info(f"Request User: {request.user}")
     logger.info(f"{separator}--- End of Request Details ---{separator}")
-    
+
     # 요청의 내용을 응답으로 반환
     request_data = {
         'method': request.method,
@@ -62,7 +62,7 @@ def check_login_status(request: HttpRequest):
             'username': request.user.username if request.user.is_authenticated else None
         }
     }
-    
+
     return JsonResponse({'logged_in': True, 'username': request.user.username, 'request_data': request_data})
 
 
