@@ -220,7 +220,7 @@ requests_log.setLevel(logging.DEBUG)
 requests_log.propagate = True
 
 # 기본 로그인 URL 설정
-LOGIN_URL = '/oauth/login/'
+LOGIN_URL = '/oauth/not_login/'
 
 # 세션 쿠키 설정
 SESSION_COOKIE_NAME = 'sessionid'

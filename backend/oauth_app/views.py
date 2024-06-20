@@ -64,3 +64,7 @@ def check_login_status(request: HttpRequest):
     }
     
     return JsonResponse({'logged_in': True, 'username': request.user.username, 'request_data': request_data})
+
+
+def not_login(request):
+    return JsonResponse({'logged_in': False})
