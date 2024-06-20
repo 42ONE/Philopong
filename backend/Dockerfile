@@ -14,5 +14,17 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy project
 COPY . /app/
+RUN chmod +x /app/scripts/initdjango.sh
 
-RUN python manage.py migrate
+RUN apt-get update && apt-get install -y postgresql-client \
+    dumb-init \
+    procps
+RUN pip install psycopg2-binary
+RUN pip install requests requests-oauthlib
+RUN pip install django-cors-headers
+
+
+
+ENTRYPOINT ["/usr/bin/dumb-init","--","/app/scripts/initdjango.sh"]
+
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

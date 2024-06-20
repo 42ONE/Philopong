@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from datetime import timedelta
 from pathlib import Path
+import logging
+import requests
+import requests_oauthlib
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,14 +35,21 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.sessions', # 42oauth를 위한 추가(로그인유무)
+    'django.contrib.sites', # 42oauth를 위한 추가
     'oauth_app',
     'django.contrib.admin',
     'corsheaders',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+]
+
+# 42oauth를 위한 추가
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # 허용할 프론트엔드 주소
+    "http://127.0.0.1:3000",  # 허용할 프론트엔드 주소
 ]
 
 # AUTH_USER_MODEL = 'User'
@@ -48,16 +58,33 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware', # 세션미들웨어
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware', # 인증미들웨어
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# Allow all origins (주의: 개발 중에만 사용하고, 프로덕션에서는 제한된 도메인을 명시하는 것이 좋습니다)
-CORS_ALLOW_ALL_ORIGINS = True
+# 또는 모든 도메인을 허용할 수 있지만, 이는 개발에서만 사용하고 배포에서는 특정 도메인만 허용하는 것이 좋습니다.
+CORS_ALLOW_ALL_ORIGINS = True  # 개발 중에는 이 옵션을 사용할 수 있지만, 배포 시엔 특정 도메인만 허용하도록 수정 필요
+
+# 추가적인 CORS 설정
+CORS_ALLOW_CREDENTIALS = True
+# CORS_ALLOW_HEADERS = [  # 요청 헤더 중 허용할 것만 추가 가능
+#     'accept',
+#     'accept-encoding',
+#     'authorization',
+#     'content-type',
+#     'dnt',
+#     'origin',
+#     'user-agent',
+#     'x-csrftoken',
+#     'x-requested-with',
+#     #쿠키,세션 모두 추가
+#     'cookie',
+#     'sessionid',
+# ]
 
 ROOT_URLCONF = 'philopong.urls'
 
@@ -83,23 +110,35 @@ WSGI_APPLICATION = 'philopong.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+DATABASES = {
+    'default': {
+       'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
+    }
+}
+
 # DATABASES = {
 #     'default': {
-#        'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': os.getenv('DB_NAME'),
-#         'USER': os.getenv('DB_USER'),
-#         'PASSWORD': os.getenv('DB_PASSWORD'),
-#         'HOST': os.getenv('DB_HOST'),
-#         'PORT': os.getenv('DB_PORT'),
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'pongdb',
+#         'USER': 'ponguser',
+#         'PASSWORD': 'pongpassword',
+#         'HOST': 'db',
+#         'PORT': '5432',
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 
 # Password validation
@@ -126,7 +165,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# 서울
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
@@ -157,3 +197,33 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
+
+
+# 42oauth를 위한 추가
+FORTYTWO_CLIENT_ID = 'u-s4t2ud-55550ebcca6cb44059fcd2728d70aad8b98968c87439b28c0548e035f09cc684'
+FORTYTWO_CLIENT_SECRET = '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'
+
+# 인증 관련 설정, 42oauth를 위한 추가
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'oauth_app.backends.FortyTwoOAuth2Backend',  # 커스텀 백엔드 추가
+]
+
+# 42oauth를 위한 추가
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # 기본 설
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+
+# 로깅을 설정하여 요청과 응답을 디버그합니다.
+logging.basicConfig(level=logging.DEBUG)
+requests_log = logging.getLogger("requests.packages.urllib3")
+requests_log.setLevel(logging.DEBUG)
+requests_log.propagate = True
+
+# 기본 로그인 URL 설정
+LOGIN_URL = '/oauth/not_login/'
+
+# 세션 쿠키 설정
+SESSION_COOKIE_NAME = 'sessionid'
+SESSION_COOKIE_SECURE = False  # 개발 환경에서는 False, 프로덕션에서는 True로 설정
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'  # 또는 'Strict', 크로스 사이트 요청을 허용하려면 'None'

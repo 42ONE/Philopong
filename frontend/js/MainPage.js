@@ -1,15 +1,20 @@
 import Component from "./core/Component.js";
 import Title from "./components/Title.js";
 import { changeUrl } from "./core/changeUrl.js";
+import { isUndefined } from "./core/type.js";
 
 export default class MainPage extends Component{
+   setup() {
+    this.state = {username: '', profile: ''}
+   }
+
     template() {
       return `
       <header class="text-point-color d-flex justify-content-center py-3 title" data-component="title"></header>
       <div class="container centered-container">
       <div class="text-center d-flex flex-column justify-content-center align-items-center">
       <img class="userImage" src="../../fire.jpeg" alt="Image">
-      <p class="userInfo"> <span id="welcome">Hello</span>, Hyuim!</p>
+      <p class="userInfo"> <span id="welcome">Hello</span>, ${this.state.username}!</p>
       <button class="btn-logout" id="logout">Logout</button>
           <button class="btn btn-primary btn-lg mb-2 d-block" id="btn1v1"></button>
           <button class="btn btn-primary btn-lg mb-2 d-block" id="btnAI"></button>

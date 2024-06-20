@@ -1,49 +1,70 @@
-from django.shortcuts import redirect
-from django.http import JsonResponse
-import requests
+# oauth_app/views.py
 
-# 42 API 클라이언트 ID와 비밀
-CLIENT_ID = 'u-s4t2ud-55550ebcca6cb44059fcd2728d70aad8b98968c87439b28c0548e035f09cc684'
-CLIENT_SECRET = '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'
-REDIRECT_URI = 'http://127.0.0.1:8000/oauth/callback/'
+from django.contrib.auth import login
+from django.shortcuts import redirect, render
+from django.http import JsonResponse, HttpResponse, HttpRequest
+from .backends import FortyTwoOAuth2, FortyTwoOAuth2Backend
+from django.contrib.auth.decorators import login_required
+import logging
 
-# 인덱스 뷰 - OAuth2 인증 페이지로 리디렉션
-def login(request):
-    authorize_url = (
-        "https://api.intra.42.fr/oauth/authorize"
-        "?client_id={client_id}"
-        "&redirect_uri={redirect_uri}"
-        "&response_type=code"
-        "&scope=public projects profile elearning tig forum"
-        "&state=random_state_string"
-    ).format(
-        client_id=CLIENT_ID,
-        redirect_uri=REDIRECT_URI,
-    )
-    # 리다이렉션 URL 반환
-    return JsonResponse({'authorize_url': authorize_url})
 
-# 콜백 뷰 - 액세스 토큰 교환 및 사용자 정보 반환
-def callback(request):
-    code = request.GET.get('code')
-    state = request.GET.get('state')
+# 로그 설정
+logger = logging.getLogger(__name__)
 
-    token_url = 'https://api.intra.42.fr/oauth/token'
-    token_data = {
-        'grant_type': 'authorization_code',
-        'client_id': CLIENT_ID,
-        'client_secret': CLIENT_SECRET,
-        'code': code,
-        'redirect_uri': REDIRECT_URI,
+def fortytwo_login(request):
+    oauth = FortyTwoOAuth2()
+    authorization_url, state = oauth.get_authorization_url()
+    request.session['oauth_state'] = state
+    return JsonResponse({'authorize_url': authorization_url})
+
+def fortytwo_callback(request):
+    oauth = FortyTwoOAuth2()
+    token = oauth.get_token(request.get_full_path())
+    user = oauth.authenticate(token)
+    if user:
+        # 사용자 객체에 backend 속성 추가
+        user.backend = 'oauth_app.backends.FortyTwoOAuth2Backend'
+        login(request, user)  # Django의 인증 시스템 사용
+        return redirect('http://127.0.0.1:3000/main-page')
+    else:
+        return HttpResponse("Authentication failed", status=401)
+
+@login_required
+def protected_view(request):
+    return HttpResponse(f"Welcome to the protected view, {request.user.username}")
+
+@login_required
+def check_login_status(request: HttpRequest):
+    # 개행 추가를 위한 문자열
+    separator = "\n" * 5
+
+    # 요청의 내용을 로그로 출력 (개행 추가)
+    logger.info(f"{separator}--- Start of Request Details ---{separator}")
+    logger.info(f"Request Method: {request.method}")
+    logger.info(f"Request URL: {request.build_absolute_uri()}")
+    logger.info(f"Request Headers: {dict(request.headers)}")
+    logger.info(f"Request GET Parameters: {request.GET}")
+    logger.info(f"Request POST Parameters: {request.POST}")
+    logger.info(f"Request Cookies: {request.COOKIES}")
+    logger.info(f"Request User: {request.user}")
+    logger.info(f"{separator}--- End of Request Details ---{separator}")
+    
+    # 요청의 내용을 응답으로 반환
+    request_data = {
+        'method': request.method,
+        'url': request.build_absolute_uri(),
+        'headers': dict(request.headers),
+        'get_parameters': request.GET.dict(),
+        'post_parameters': request.POST.dict(),
+        'cookies': request.COOKIES,
+        'user': {
+            'is_authenticated': request.user.is_authenticated,
+            'username': request.user.username if request.user.is_authenticated else None
+        }
     }
+    
+    return JsonResponse({'logged_in': True, 'username': request.user.username, 'request_data': request_data})
 
-    token_response = requests.post(token_url, data=token_data)
-    token_json = token_response.json()
-    access_token = token_json.get('access_token')
 
-    user_info_url = 'https://api.intra.42.fr/v2/me'
-    headers = {'Authorization': f'Bearer {access_token}'}
-    user_info_response = requests.get(user_info_url, headers=headers)
-
-    user_info = user_info_response.json()
-    return JsonResponse(user_info)
+def not_login(request):
+    return JsonResponse({'logged_in': False})

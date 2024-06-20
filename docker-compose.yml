@@ -5,26 +5,26 @@ services:
     image: postgres:13
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    environment:
-      POSTGRES_DB: pongdb
-      POSTGRES_USER: ponguser
-      POSTGRES_PASSWORD: pongpassword
+    ports:
+    - "5432:5432"
+    networks:
+      - app_network
+    container_name: db
+    env_file:
+      - .env
 
   web:
     build: ./backend
-    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./backend:/app
     ports:
       - "8000:8000"
     depends_on:
       - db
-    environment:
-      - DB_NAME=pongdb
-      - DB_USER=ponguser
-      - DB_PASSWORD=pongpassword
-      - DB_HOST=db
-      - DB_PORT=5432
+    networks:
+      - app_network
+    env_file:
+      - .env
 
   frontend:
     build: ./frontend
@@ -34,6 +34,10 @@ services:
       - ./frontend:/usr/share/nginx/html:ro
     depends_on:
       - web
+    networks:
+      - app_network
+    env_file:
+      - .env
 
 volumes:
   postgres_data:
@@ -43,4 +47,8 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: ./frontend 
+      device: ./frontend
+
+networks:
+  app_network:
+    driver: bridge

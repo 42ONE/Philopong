@@ -1,4 +1,4 @@
-import { changeUrl , routes, $style } from "./core/changeUrl.js";
+import { changeUrl , routes, $style, checkLoginStatus } from "./core/changeUrl.js";
 import { isUndefined } from "./core/type.js";
 import { tournamentHistory } from "./core/tournamentHistory.js";
 
@@ -11,8 +11,10 @@ if (isUndefined(isNotFoundPage))
   changeUrl('/');
 }
 
-routes[window.location.pathname].page.render();
-$style.href = routes[window.location.pathname].css;
+changeUrl(window.location.pathname);
+
+// routes['/login'].page.render();
+// $style.href = routes['/login'].css;
 
 window.addEventListener("popstate", () => {
   changeUrl(window.location.pathname);
