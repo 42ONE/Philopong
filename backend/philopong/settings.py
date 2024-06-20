@@ -243,8 +243,8 @@ CSRF_MIDDLEWARE_TOKEN = True
 APPEND_SLASH = False
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://127.0.0.1:3000/',
-    'https://localhost:3000/',  # 프론트엔드 주소
+    '127.0.0.1:3000',
+    'localhost:3000',  # 프론트엔드 주소
 ]
 # CSRF_HEADER_NAME = 'HTTP_X_CSRFTOKEN'
 CSRF_COOKIE_HTTPONLY = False  # False로 설정하여 자바스크립트에서 접근할 수 있도록 함

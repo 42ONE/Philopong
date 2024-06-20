@@ -54,20 +54,34 @@ export const routes = {
 
 };
 
+async function getUserInfo() {
+    const url = 'https://127.0.0.1:8000/oauth/get_user_data/';
+    const options = {
+        credentials: 'include'  // 세션 정보를 포함하여 요청
+    };
+
+    const response = await fetch(url, options);
+    const data = await response.json();
+
+    return data;
+}
+
 export const changeUrl = async (requestedUrl) => {
     const routeKeys = Object.keys(routes);
     const isnotFoundPage = routeKeys.find(elem => elem === requestedUrl);
     const data = await checkLoginStatus();
-    // console.log(loginStatus);
     const path = data.logged_in ? (isUndefined(isnotFoundPage) ? '/' : requestedUrl) : '/login';
 
     history.pushState(null, null, path);
 
-    console.log("here");
     if (path === '/1v1' || path === '/multi' || path === '/ai' || path === '/tournament')
         routes[path].page.gameStart();
 
-    routes[path].page.setState({ 'username': data.username });
+    if (path === '/' || path === '/main-page')
+    {
+        const userData = await getUserInfo();
+        routes[path].page.setState({ 'username': userData.user_name, 'profile_img': userData.profile_image_link});
+    }
     routes[path].page.render();
     $style.href = routes[path].css;
 }

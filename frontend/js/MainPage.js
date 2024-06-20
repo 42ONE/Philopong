@@ -6,7 +6,7 @@ import { logoutUser } from "./core/changeUrl.js";
 
 export default class MainPage extends Component{
    setup() {
-    this.state = {username: '', profile: ''}
+    this.state = {username: '', profile_img: ''}
    }
 
     template() {
@@ -14,7 +14,7 @@ export default class MainPage extends Component{
       <header class="text-point-color d-flex justify-content-center py-3 title" data-component="title"></header>
       <div class="container centered-container">
       <div class="text-center d-flex flex-column justify-content-center align-items-center">
-      <img class="userImage" src="../../fire.jpeg" alt="Image">
+      <img class="userImage" width="40" src="${this.state.profile_img}" alt="Image">
       <p class="userInfo"> <span id="welcome">Hello</span>, ${this.state.username}!</p>
       <button class="btn-logout" id="logout">Logout</button>
           <button class="btn btn-primary btn-lg mb-2 d-block" id="btn1v1"></button>
