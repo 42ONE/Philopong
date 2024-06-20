@@ -95,15 +95,11 @@ export async function checkLoginStatus() {
 
     // let isLogin = false;
 
-    // Log the URL and request options before making the request
-    console.log('Request URL:', url);
-    console.log('Request Options:', options);
 
     const response = await fetch(url, options);
     const data = await response.json();
     // const isLoginStatus = await data.logged_in;
 
-    // console.log("login status : ", isLoginStatus);
     return data;
 }
 
@@ -126,7 +122,6 @@ function getCookie(name) {
 export function logoutUser() {
     const logoutUrl = 'https://127.0.0.1:8000/oauth/logout/';
     const csrfToken = getCookie('csrftoken');  // CSRF 토큰 가져오기
-    console.log(csrfToken);
     const options = {
         method: 'POST',
         credentials: 'include',
@@ -140,7 +135,6 @@ export function logoutUser() {
         .then(response => response.json())
         .then(data => {
             if (data.message) {
-                console.log('Logout successful:', data.message);
                 // 로그아웃 후 로그인 페이지로 리다이렉트
                 changeUrl('/login');
             } else {
