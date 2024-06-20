@@ -2,6 +2,7 @@ import Component from "./core/Component.js";
 import Title from "./components/Title.js";
 import { changeUrl } from "./core/changeUrl.js";
 import { isUndefined } from "./core/type.js";
+import { logoutUser } from "./core/changeUrl.js";
 
 export default class MainPage extends Component{
    setup() {
@@ -81,5 +82,9 @@ export default class MainPage extends Component{
       document.getElementById('btnAI').addEventListener('click', function() {
         changeUrl("/ai");
       });
+
+      document.getElementById('logout').addEventListener('click', function () {
+        logoutUser();
+      })
       }
   }

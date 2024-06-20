@@ -5,11 +5,11 @@ FROM nginx:alpine
 RUN apk add openssl
 
 # Create SSL files
-RUN mkdir -p /ssl_files && \
-    openssl req \
-    -newkey rsa:2048 -nodes -keyout /ssl_files/my_ssl.key \
-    -x509 -days 365 -out /ssl_files/my_ssl.crt \
-    -subj "/C=KO/ST=Seoul/L=Gaepo/O=42Seoul/OU=hyuim/CN=localhost"
+# RUN mkdir -p /ssl_files && \
+#     openssl req \
+#     -newkey rsa:2048 -nodes -keyout /ssl_files/my_ssl.key \
+#     -x509 -days 365 -out /ssl_files/my_ssl.crt \
+#     -subj "/C=KO/ST=Seoul/L=Gaepo/O=42Seoul/OU=hyuim/CN=localhost"
 
 
 # Copy nginx config file

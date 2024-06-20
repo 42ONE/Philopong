@@ -49,8 +49,8 @@ INSTALLED_APPS = [
 
 # 42oauth를 위한 추가
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # 허용할 프론트엔드 주소
-    "http://127.0.0.1:3000",  # 허용할 프론트엔드 주소
+    "https://127.0.0.1:3000",  # 허용할 프론트엔드 주소
+    "https://localhost:3000",  # 허용할 프론트엔드 주소
 ]
 
 # AUTH_USER_MODEL = 'User'
@@ -232,9 +232,19 @@ SESSION_COOKIE_SAMESITE = 'Lax'  # 또는 'Strict', 크로스 사이트 요청�
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = True
+CSRF_MIDDLEWARE_TOKEN = True
 # DEBUG = True
 
 # SSL 관련 설정 무시
 # 실제 운영 환경에서는 사용하지 않는 것이 좋습니다.
 # os.environ['HTTPS'] = "on"
+APPEND_SLASH = False
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://127.0.0.1:3000/',
+    'https://localhost:3000/',  # 프론트엔드 주소
+]
+# CSRF_HEADER_NAME = 'HTTP_X_CSRFTOKEN'
+CSRF_COOKIE_HTTPONLY = False  # False로 설정하여 자바스크립트에서 접근할 수 있도록 함

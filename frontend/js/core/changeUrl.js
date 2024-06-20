@@ -74,7 +74,7 @@ export const changeUrl = async (requestedUrl) => {
 
 export async function checkLoginStatus() {
     // Define the URL and request options
-    const url = 'https://127.0.0.1:8000/oauth/check_login_status';
+    const url = 'https://127.0.0.1:8000/oauth/check_login_status/';
     const options = {
         credentials: 'include'  // 세션 정보를 포함하여 요청
     };
@@ -91,35 +91,47 @@ export async function checkLoginStatus() {
 
     // console.log("login status : ", isLoginStatus);
     return data;
-        // fetch(url, options).then(response => {
-        //     // Log response details before processing the JSON
-        //     console.log('---------------------------------');
-        //     console.log('Response Status:', response.status);
-        //     console.log('Response Headers:', Array.from(response.headers.entries()));
-        //     console.log('---------------------------------');
+}
 
-        //     return response.json();
-        // })
-        // .then(data => {
-        //     // Log the response data
-        //     console.log('Response Data:', data);
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // 쿠키의 이름을 확인하고, 해당 쿠키의 값을 가져옵니다.
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
 
-        //     // isLogin = data.logged_in;
-        //     console.log("data: ", data);
-        //     if (data.logged_in) {
-        //         console.log(`User is logged in as ${data.username}`);
-        //         changeUrl('/');
-        //         // 로그인된 사용자에게 보여줄 화면을 표시하거나 데이터를 가져오는 로직 추가
-        //     } else {
-        //         console.log('User is not logged in');
-        //         // 로그인 페이지로 리다이렉트 등 처리
-        //         changeUrl('/login');
-        //     }
-        //     // console.log("login status : ", isLogin);
-        //     return data.logged_in;
-        // })
-        // .catch(error => console.error('Error:', error));
+export function logoutUser() {
+    const logoutUrl = 'https://127.0.0.1:8000/oauth/logout/';
+    const csrfToken = getCookie('csrftoken');  // CSRF 토큰 가져오기
+    console.log(csrfToken);
+    const options = {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken  // CSRF 토큰을 헤더에 포함
+        }
+    };
 
-
-    // return isLogin;
+    fetch(logoutUrl, options)
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                console.log('Logout successful:', data.message);
+                // 로그아웃 후 로그인 페이지로 리다이렉트
+                changeUrl('/login');
+            } else {
+                console.error('Logout failed:', data.error);
+            }
+        })
+        .catch(error => console.error('Error:', error));
 }
