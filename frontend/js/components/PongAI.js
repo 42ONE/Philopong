@@ -90,11 +90,11 @@ function updateScore(player) {
         document.getElementById('AIScore').textContent = `${score2} :AI`;
     }
 
-    if (score1 === 3 || score2 === 3)
+    if (score1 === 5 || score2 === 5)
         {
-            if (score1 === 3) {
+            if (score1 === 5) {
                 createWinnerMessage('Player 1');
-            } else if (score2 === 3) {
+            } else if (score2 === 5) {
                 createWinnerMessage('AI');
             }
             ballSpeed.x = 0;
@@ -167,7 +167,7 @@ export function init() {
     // 카메라 설정 (PerspectiveCamera 사용)
     let aspect = window.innerWidth / window.innerHeight;
     camera = new THREE.PerspectiveCamera(75, aspect, 1, 1000);
-    camera.position.set(0, 0, 800); // 카메라 위치 설정
+    camera.position.set(0, 0, 900); // 카메라 위치 설정
     camera.lookAt(0, 0, 0); // 카메라가 바라보는 방향 설정
 
     // 렌더러 설정
@@ -204,8 +204,8 @@ export function init() {
     paddle1 = new THREE.Mesh(paddleGeometry, paddleMaterial);
     paddle2 = new THREE.Mesh(paddleGeometry, paddleMaterial);
 
-    paddle1.position.set(-window.innerWidth / 2 + paddleWidth / 2, 0, 0);
-    paddle2.position.set(window.innerWidth / 2 - paddleWidth / 2, 0, 0);
+    paddle1.position.set(-window.innerWidth / 2 + paddleWidth / 2 + window.innerHeight / 8, 0, 0);
+    paddle2.position.set(window.innerWidth / 2 - paddleWidth / 2 - window.innerHeight / 8, 0, 0);
 
     // 그림자 설정
     paddle1.castShadow = true;
@@ -230,7 +230,7 @@ export function init() {
     let groundMaterial = new THREE.MeshStandardMaterial({ color: 0xf3f3f3 }); // 표준 재질 사용
     let ground = new THREE.Mesh(groundGeometry, groundMaterial);
     ground.rotation.x = -Math.PI / 2; // 바닥면을 수평으로 설정
-    ground.position.y = -400; // 바닥면 위치 설정
+    ground.position.y = -window.innerHeight / 2; // 바닥면 위치 설정
     ground.receiveShadow = true; // 그림자 수신 설정
     scene.add(ground);
 
