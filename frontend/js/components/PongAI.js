@@ -1,5 +1,6 @@
 import { changeUrl } from "../core/changeUrl.js";
 
+let ballPositionX;
 let ballPositionY;
 let updateBallPositionInterval;
 let updatePaddle2PositionInterval;
@@ -7,18 +8,20 @@ let scene, camera, renderer;
 let paddle1, paddle2, ball;
 let paddleWidth = 30, paddleHeight = 200, paddleDepth = 100; // 패들 두께 추가
 let ballRadius = 15;  // 공 반지름
-let xSpeed = 5;
-let ySpeed = 5;
+let xSpeed = 15;
+let ySpeed = 15;
 let ballSpeed = { x: xSpeed, y: ySpeed };  // 초기 공 속도 (x, y 방향 모두 적용)
-let paddleSpeed = 15;
-let paddle2Speed = 30;
-let noise;
-let const1 = Math.PI / 2;
-let const2 = Math.PI / 20;
+let paddleSpeed = 30;
 let keys = { ArrowUp: false, ArrowDown: false};
+var topLimit = window.innerHeight / 2;
+var bottomLimit = -topLimit;
 
 let score1 = 0;
 let score2 = 0;
+
+var paddle1Pos = -window.innerWidth / 2 + paddleWidth / 2 + window.innerHeight / 8;
+var paddle2Pos = window.innerWidth / 2 - paddleWidth / 2 - window.innerHeight / 8;
+var predY;
 export var myReq;
 
 function createScoreBoard() {
@@ -204,8 +207,8 @@ export function init() {
     paddle1 = new THREE.Mesh(paddleGeometry, paddleMaterial);
     paddle2 = new THREE.Mesh(paddleGeometry, paddleMaterial);
 
-    paddle1.position.set(-window.innerWidth / 2 + paddleWidth / 2 + window.innerHeight / 8, 0, 0);
-    paddle2.position.set(window.innerWidth / 2 - paddleWidth / 2 - window.innerHeight / 8, 0, 0);
+    paddle1.position.set(paddle1Pos, 0, 0);
+    paddle2.position.set(paddle2Pos, 0, 0);
 
     // 그림자 설정
     paddle1.castShadow = true;
@@ -251,7 +254,8 @@ export function init() {
     scene.add(line2);
 
     createScoreBoard();
-
+	console.log("height", window.innerHeight);
+	console.log("width", window.innerWidth);
     // 이벤트 리스너 추가
     window.addEventListener('resize', onWindowResize, false);
     window.addEventListener('keydown', onKeyDown, false);
@@ -260,9 +264,16 @@ export function init() {
     // 1초마다 공의 y 위치를 업데이트
     updateBallPositionInterval = setInterval(updateBallPosition, 1000);
 
+
     // 100ms마다 paddle2의 위치를 업데이트
     updatePaddle2PositionInterval = setInterval(updatePaddle2Position, 50);
+
+	//setInterval(printBallPos, 1000); //1초에 300
 }
+
+//function printBallPos() {
+//	console.log(ball.position.y);
+//}
 
 function onWindowResize() {
     let aspect = window.innerWidth / window.innerHeight;
@@ -314,18 +325,47 @@ function checkBallPaddleCollision() {
 }
 
 function updateBallPosition() {
+	let t;
+	
     noise = 0;
-    ballPositionY = ball.position.y;
+	ballPositionX = ball.position.x + window.innerWidth / 2;
+    ballPositionY = ball.position.y + window.innerHeight / 2;
+	if (ballSpeed.x > 0)
+	{
+		t = (paddle2Pos + window.innerWidth / 2 - ballPositionX) / ballSpeed.x;
+		predY = ballSpeed.y * t + ballPositionY;
+		if (predY > window.innerHeight)
+		{
+			if ((predY / window.innerHeight) % 2 == 0)
+				predY = predY % window.innerHeight;
+			else
+				predY = window.innerHeight - (predY % window.innerHeight);
+		}
+		else if (predY < 0)
+		{
+			if ((predY / window.innerHeight) % 2 == 0)
+				predY = predY % window.innerHeight;
+			else
+				predY = -1 * (predY % window.innerHeight);
+		}
+		
+		predY = predY - (window.innerHeight / 2);
+		console.log("predY : ", predY);
+
+		
+		
+	}
 }
 
 function updatePaddle2Position() {
-    if (!ballPositionY) return; // ballPositionY가 초기화되지 않았을 때는 동작하지 않음
-
-    let distance = ballPositionY - paddle2.position.y;
-    noise = noise < const1 ? noise + const2 : const1;
-    if (Math.abs(distance) > paddleSpeed) {
-        paddle2.position.y += distance > 0 ? paddle2Speed * Math.cos(noise) : -paddle2Speed * Math.cos(noise);
-    }
+	if (paddle2.position.y + paddleHeight / 4 > predY && paddle2.position.y - paddleHeight / 4 > predY)
+	{
+		paddle2.position.y -= paddleSpeed;
+	}
+	else if (paddle2.position.y + paddleHeight / 4 < predY && paddle2.position.y - paddleHeight / 4 < predY)
+	{
+		paddle2.position.y += paddleSpeed;
+	}
 }
 
 // 애니메이션 함수에서 호출하는 부분
