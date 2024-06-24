@@ -88,6 +88,9 @@ def get_user_data(request):
     user_info = oauth.get_user_info(token)
     if 'login' not in user_info or 'image' not in user_info:
         return JsonResponse({'error': 'Invalid user data from 42 API'}, status=400)
+    # # 토큰이 만료되었을 경우 https://127.0.0.1:3000/login 페이지로 리다이렉트
+    if user_info.get('error') == 'invalid_token':
+        return JsonResponse({'error': 'Token is invalid'}, status=401)
 
     # 필요한 정보만 추출
     response_data = {

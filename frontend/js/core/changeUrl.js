@@ -59,10 +59,14 @@ async function getUserInfo() {
     const options = {
         credentials: 'include'  // 세션 정보를 포함하여 요청
     };
-
     const response = await fetch(url, options);
+    // response 401 또는 500인지 값 확인
+    if (response.status === 401 || response.status === 500) {
+        // 로그인 페이지로 리다이렉트
+        changeUrl('/login');
+        return;
+    }
     const data = await response.json();
-
     return data;
 }
 
