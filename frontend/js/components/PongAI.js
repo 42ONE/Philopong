@@ -254,8 +254,6 @@ export function init() {
     scene.add(line2);
 
     createScoreBoard();
-	console.log("height", window.innerHeight);
-	console.log("width", window.innerWidth);
     // 이벤트 리스너 추가
     window.addEventListener('resize', onWindowResize, false);
     window.addEventListener('keydown', onKeyDown, false);
@@ -271,9 +269,6 @@ export function init() {
 	//setInterval(printBallPos, 1000); //1초에 300
 }
 
-//function printBallPos() {
-//	console.log(ball.position.y);
-//}
 
 function onWindowResize() {
     let aspect = window.innerWidth / window.innerHeight;
@@ -327,7 +322,6 @@ function checkBallPaddleCollision() {
 function updateBallPosition() {
 	let t;
 	
-    noise = 0;
 	ballPositionX = ball.position.x + window.innerWidth / 2;
     ballPositionY = ball.position.y + window.innerHeight / 2;
 	if (ballSpeed.x > 0)
@@ -350,10 +344,6 @@ function updateBallPosition() {
 		}
 		
 		predY = predY - (window.innerHeight / 2);
-		console.log("predY : ", predY);
-
-		
-		
 	}
 }
 
