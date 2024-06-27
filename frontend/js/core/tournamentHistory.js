@@ -16,11 +16,11 @@ export var tournamentHistory = {
         winner: '',
     },
     match3: {
-        user1: '',
-        user2: '',
+        user1: 'match1 winner',
+        user2: 'match2 winner',
         score1: 0,
         score2: 0,
-        winner: '',
+        winner: 'winner',
     },
 }
 

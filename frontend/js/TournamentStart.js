@@ -38,8 +38,6 @@ export default class TournamentStart extends Component {
 	mounted () {
         changeLanguage("tournament-start");
 
-
-
         document.getElementById('start').addEventListener('click', function(e) {
             e.preventDefault();
             const player1 = document.getElementById('player1').value;
@@ -52,10 +50,21 @@ export default class TournamentStart extends Component {
                 tournamentHistory.cnt = 0;
                 tournamentHistory.match1.user1 = player1;
                 tournamentHistory.match1.user2 = player2;
+                tournamentHistory.match1.score1 = 0;
+                tournamentHistory.match1.score2 = 0;
+                tournamentHistory.match1.winner = 'match1 winner';
                 tournamentHistory.match2.user1 = player3;
                 tournamentHistory.match2.user2 = player4;
+                tournamentHistory.match2.score1 = 0;
+                tournamentHistory.match2.score2 = 0;
+                tournamentHistory.match2.winner = 'match2 winner';
+                tournamentHistory.match3.user1 = 'match1 winner',
+                tournamentHistory.match3.user2 = 'match2 winner',
+                tournamentHistory.match3.score1 = 0;
+                tournamentHistory.match3.score2 = 0;
+                tournamentHistory.match3.winner = 'winner';
                 localStorage.setItem('tournament', JSON.stringify(tournamentHistory));
-                changeUrl("/tournament");
+                changeUrl("/tournament-board");
             }
           });
 

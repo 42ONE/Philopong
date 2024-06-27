@@ -71,18 +71,25 @@ function changeLanguage(page) {
     }
     else if (page == "tournament-start")
     {
-        document.querySelector('#header').textContent = window.translations[language].enterNick;    
-        document.querySelector('#p1').textContent = `${window.translations[language].player} 1`;    
-        document.querySelector('#p2').textContent = `${window.translations[language].player} 2`;    
-        document.querySelector('#p3').textContent = `${window.translations[language].player} 3`;    
-        document.querySelector('#p4').textContent = `${window.translations[language].player} 4`;    
-        document.querySelector('#start').textContent = window.translations[language].start;    
+        document.querySelector('#header').textContent = window.translations[language].enterNick;
+        document.querySelector('#p1').textContent = `${window.translations[language].player} 1`;
+        document.querySelector('#p2').textContent = `${window.translations[language].player} 2`;
+        document.querySelector('#p3').textContent = `${window.translations[language].player} 3`;
+        document.querySelector('#p4').textContent = `${window.translations[language].player} 4`;
+        document.querySelector('#start').textContent = window.translations[language].start;
     }
     else if (page == "tournament-result")
     {
-        document.querySelector('#semi-final').textContent = window.translations[language].semiFinal;    
-        document.querySelector('#final').textContent = window.translations[language].final;    
-        document.querySelector('#winner').textContent = window.translations[language].winner;    
-        document.querySelector('#go-main').textContent = window.translations[language].goMain;    
+        document.querySelector('#semi-final').textContent = window.translations[language].semiFinal;
+        document.querySelector('#final').textContent = window.translations[language].final;
+        document.querySelector('#winner').textContent = window.translations[language].winner;
+        document.querySelector('#go-main').textContent = window.translations[language].goMain;
+    }
+    else if (page == "tournament-board")
+    {
+        document.querySelector('#semi-final').textContent = window.translations[language].semiFinal;
+        document.querySelector('#final').textContent = window.translations[language].final;
+        document.querySelector('#winner').textContent = window.translations[language].winner;
+        document.querySelector('#start').textContent = window.translations[language].start;
     }
 }

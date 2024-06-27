@@ -7,6 +7,7 @@ import OneVOne from "../OneVOne.js";
 import Multi from "../Multi.js";
 import AI from "../AI.js";
 import { isUndefined } from "./type.js";
+import TournamentBoard from "../TournamentBoard.js";
 
 export const $app = document.querySelector("#app");
 export const $style = document.querySelector("#page-style");
@@ -31,6 +32,10 @@ export const routes = {
     "/tournament-start": {
         page: new TournamentStart($app),
         css: "../css/tournament-start.css",
+    },
+    "/tournament-board": {
+        page: new TournamentBoard($app),
+        css: "../css/tournament-result.css",
     },
     "/main-page": {
         page: new MainPage($app),
