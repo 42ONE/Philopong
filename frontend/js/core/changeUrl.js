@@ -59,7 +59,7 @@ export const routes = {
 
 };
 
-async function getUserInfo() {
+export async function getUserInfo() {
     const url = 'https://127.0.0.1:8000/oauth/get_user_data/';
     const options = {
         credentials: 'include'  // 세션 정보를 포함하여 요청

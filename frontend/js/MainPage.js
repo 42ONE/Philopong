@@ -67,7 +67,8 @@ export default class MainPage extends Component{
         changeLanguage("mainpage");
       });
 
-      document.getElementById('btn1v1').addEventListener('click', function() {
+      document.getElementById('btn1v1').addEventListener('click', function(e) {
+        e.preventDefault();
         changeUrl("/1v1");
       });
 
